@@ -1,35 +1,39 @@
-# Auburn University Thesis / Dissertation — Accessible LaTeX Template
+<p align="center">
+    <br> <b>English</b> | <a href="README.zh-CN.md">中文</a>
+</p>
 
-**English** | [中文](README.zh-CN.md)
+<h1 align="center">🎓 Auburn Accessible Thesis</h1>
 
-An unofficial LaTeX class for Auburn University Electronic Theses and
-Dissertations (ETD) that produces a **tagged, WCAG 2.1 AA / PDF/UA-1 conformant**
-PDF. Compile with **LuaLaTeX**; every font is bundled, so the project is fully
-self-contained.
+<p align="center">
+    <em>An accessible (WCAG 2.1 AA / PDF/UA-1) LaTeX template for Auburn University theses & dissertations.</em>
+</p>
 
-> Unofficial template — check the current
-> [Auburn Graduate School ETD Guide](https://graduate.auburn.edu/etd/) for the
-> format rules before you submit.
+<p align="center">
+  <a href="LICENSE" target="_blank">
+    <img alt="MIT License" src="https://img.shields.io/github/license/Franklinwang72/auburn-accessible-thesis.svg?style=flat-square" />
+  </a>
+  <a href="https://github.com/Franklinwang72/auburn-accessible-thesis/stargazers">
+    <img alt="Stars" src="https://img.shields.io/github/stars/Franklinwang72/auburn-accessible-thesis?style=flat-square" />
+  </a>
+  <img alt="LuaLaTeX" src="https://img.shields.io/badge/-LuaLaTeX-008080?style=flat-square&logo=latex&logoColor=white" />
+  <img alt="PDF/UA-1" src="https://img.shields.io/badge/-PDF%2FUA--1-1f6feb?style=flat-square" />
+  <img alt="WCAG 2.1 AA" src="https://img.shields.io/badge/-WCAG%202.1%20AA-2da44e?style=flat-square" />
+  <img alt="TeX Live 2023+" src="https://img.shields.io/badge/-TeX%20Live%202023+-black?style=flat-square&logo=latex&logoColor=white" />
+</p>
 
-## Features
+An unofficial Auburn University ETD template that compiles to a **tagged, WCAG 2.1 AA / PDF/UA-1** PDF — real heading structure, figure alt text, table headers, and automatic MathML for every formula. Compile with **LuaLaTeX**; all fonts are bundled, so the project is fully self-contained.
 
-- **Accessible by construction** — a tagged PDF with real heading structure,
-  figure alt text, table headers, and automatic MathML for every formula.
-  Verified PDF/UA-1 with veraPDF.
-- **Self-contained fonts** — Source Sans 3 (body), STIX Two Math (formulas),
-  Atkinson Hyperlegible Mono (code), bundled with their OFL licences.
-- **Format-compliant** — ≥1″ margins (1.5″ left with the `binding` option),
-  12 pt text, page numbers centred at the bottom, all required preliminary pages
-  including the AI-use disclosure.
-- **Just works** — centred chapter headings, clickable Table of Contents / List
-  of Tables / List of Figures, and commutative diagrams drawn in `tikz-cd`
-  (no image files) — all correctly tagged.
+> Unofficial — check the current [Auburn Graduate School ETD Guide](https://graduate.auburn.edu/etd/) for the format rules before you submit.
 
-## Quick start
+## Preview
 
-**Overleaf** — upload the project, then **Menu → Compiler → LuaLaTeX** and
-**Menu → TeX Live version → the latest**, and **Recompile**. (LuaLaTeX is
-required; pdfLaTeX / XeLaTeX will not produce a tagged PDF.)
+<p align="center">
+  <img width="1000" src="preview.png" alt="Title page, a figure page, and the tagged snake-lemma diagram" />
+</p>
+
+## Quick Start
+
+**Overleaf** — upload the project, set **Menu → Compiler → LuaLaTeX** and **TeX Live version → the latest**, then **Recompile**. (LuaLaTeX is required; pdfLaTeX / XeLaTeX will not tag the PDF.)
 
 **Local** — TeX Live 2023 or later:
 
@@ -38,34 +42,35 @@ latexmk -lualatex main.tex   # build main.pdf (runs biber automatically)
 latexmk -c                   # remove build files, keep main.pdf
 ```
 
-## What to edit
+## Features
 
-Start in **`main.tex`** (title-page info + which chapters are included), then:
+- **Accessible by construction** — tagged PDF with heading structure, figure alt text, table headers, and MathML for every formula. Verified PDF/UA-1 with veraPDF.
+- **Self-contained fonts** — Source Sans 3 (body), STIX Two Math (formulas), Atkinson Hyperlegible Mono (code), bundled with their OFL licences.
+- **Format-compliant** — ≥1″ margins (1.5″ left with `binding`), 12 pt text, centred page numbers, all required preliminary pages including the AI-use disclosure.
+- **Commutative diagrams** — drawn in `tikz-cd` (no image files), correctly tagged with alt text and a bounding box.
+- **Just works** — centred chapter headings, clickable Table of Contents / List of Tables / List of Figures.
 
-- `frontmatter/*.tex` — abstract, AI-use disclosure, acknowledgments, abbreviations
-- `chapters/chapter1.tex … chapter3.tex` — your body chapters
-- `appendices/appendix1.tex` — appendix
-- `references.bib` — bibliography database (biblatex / biber)
-- `figures/` — images you include with `\includegraphics`
+## What You Edit
 
-Leave the engine alone: `auburn-thesis.cls` (layout, fonts, headings, tagging),
-`fonts/`, and `.latexmkrc`.
+- `main.tex` — title-page info and which chapters are included
+- `chapters/` · `frontmatter/` · `appendices/` — your content
+- `references.bib` — bibliography (biblatex / biber)
+- `figures/` — images you place with `\includegraphics`
 
-To add a chapter, create `chapters/chapter4.tex` beginning with `\chapter{...}`
-and add `\include{chapters/chapter4}` in `main.tex`.
+Leave the engine alone: `auburn-thesis.cls`, `fonts/`, `.latexmkrc`.
 
-## Good to know
+## Good to Know
 
-- **No commas in `\chapter{...}` titles** — the TeX Live 2025+ tagging engine
-  misreads them as a key list. Use a colon or dash.
-- **Commutative diagrams** — `\auCDFigure{<alt text>}{<tikz-cd code>}` inside a
-  `figure` environment (see the snake lemma in `chapters/chapter3.tex`).
-- **You write** meaningful figure alt text and table header rows; everything
-  else (heading structure, MathML) is automatic. Chapter 2 shows how.
-- A local rebuild erroring with `Command \cftchappresnum undefined` means a
-  stale `main.toc` — run `latexmk -C` once, then rebuild.
+- **No commas in `\chapter{...}` titles** — the TeX Live 2025+ tagging engine misreads them; use a colon or dash.
+- **You write** figure alt text and table header rows; everything else (heading structure, MathML) is automatic. Chapter 2 shows how.
+- A local rebuild erroring with `Command \cftchappresnum undefined` means a stale `main.toc` — run `latexmk -C` once, then rebuild.
 
-## Licence
+## Contributors
 
-The bundled fonts use the SIL Open Font License (see `fonts/OFL-*.txt`). Choose
-and add your own licence for the template and your thesis content.
+<a href="https://github.com/Franklinwang72">
+  <img src="https://github.com/Franklinwang72.png" width="60" height="60" style="border-radius:50%" alt="Franklinwang72" />
+</a>
+
+## License
+
+[MIT](LICENSE) for the template. Bundled fonts use the SIL Open Font License (`fonts/OFL-*.txt`).
