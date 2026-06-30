@@ -1,0 +1,28 @@
+## LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+*-luamml-mathml.html
+*.fdb_latexmk
+
+## macOS / editor cruft
+.DS_Store
+*.swp
+*~
+
+## Compiled PDF: tracked by default so GitHub shows the accessible demo.
+## Uncomment the next line if you would rather not commit it.
+# main.pdf

@@ -1,0 +1,250 @@
+\chapter{How to Do It: The Building Blocks}
+\label{chap:blocks}
+
+Chapter~\ref{chap:why} explained the principles. This chapter focuses on execution. We cover the one-time setup, how to verify your document, and the \enquote{Eight Beatitudes} of accessibility: headings, figures, tables, colour, links, lists, mathematics, and code.
+
+%=====================================================================
+\section{Before you start}
+\label{sec:setup}
+
+The template is already configured. You only need to follow two rules to keep the tagging system working:
+
+\begin{enumerate}
+  \item \RedText{Do not delete} the initialization block at the very top of \texttt{main.tex}.
+  \item \textbf{Compile with LuaLaTeX.} Run \texttt{latexmk -lualatex main.tex}. On Overleaf, set the compiler to LuaLaTeX \emph{and} the TeX~Live version to \enquote{Rolling TeX~Live} (the default release is too old).
+\end{enumerate}
+
+%=====================================================================
+\section{How to check?}
+\label{sec:verify}
+
+The primary tool to evaluate your finished PDF is \textbf{PAC} (PDF Accessibility Checker). Drop your file into PAC to verify it meets the structural standards. Since automated tools cannot evaluate context, you must still manually verify reading order and alt text accuracy using a screen-reader preview. 
+
+\RedText{Never} run Adobe Acrobat's auto-tag feature---it will permanently overwrite and break the document's existing tags.
+
+If you need alternative testing software, browse the official \hrefu{https://www.w3.org/WAI/test-evaluate/tools/list/}{W3C WAI Web Accessibility Evaluation Tools List} to find a solution that fits your workflow.
+
+%=====================================================================
+\section{The Eight Beatitudes}
+\label{sec:beatitudes}
+
+There are exactly eight core elements you must format manually. Master these eight beatitudes of accessibility, and your document will remain structurally sound.
+
+%---------------------------------------------------------------------
+\subsection{Headings}
+\label{subsec:headings}
+
+\auLead{Why:} Screen-reader users jump from heading to heading to skim a document. Formatting regular text in bold to merely look like a heading deprives them of this structural navigation.
+
+\auLead{How:} Use the native LaTeX sectioning commands, and do not skip heading levels.
+
+\begin{Verbatim}
+\chapter{...}        % Heading 1
+\section{...}        % Heading 2
+\subsection{...}     % Heading 3
+\subsubsection{...}  % Heading 4
+\end{Verbatim}
+
+\auLead{Example:} \GreenText{Right:} \verb|\section{Methods}|.\quad
+\RedText{Wrong:} \verb|{\large\bfseries Methods}|---this only mimics the visual appearance.
+
+%---------------------------------------------------------------------
+\subsection{Figures}
+\label{subsec:alt}
+
+\auLead{Why:} Screen readers rely on alt text to describe visual content. Without it, the software will remain silent or read the raw file name.
+
+\auLead{How:} Place your image in \texttt{figures/}, then configure it as follows:
+
+\begin{Verbatim}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[
+    width=0.6\linewidth,
+    alt={Curved petal-like sheets that fold
+         and meet near a central hub}]
+    {figures/calabi-yau.png}
+  \caption{A cross-section of a Calabi-Yau manifold.}
+  \label{fig:calabiyau}
+\end{figure}
+\end{Verbatim}
+
+A meaningful image requires \texttt{alt=\{...\}}: provide one descriptive sentence, and avoid redundant phrases like \enquote{image of}. For purely decorative images, use the \texttt{artifact} tag (\verb|\includegraphics[artifact]{...}|) so the screen reader skips it entirely. The caption explains \emph{why} the figure is relevant; the alt text describes \emph{what} it visually depicts. Cross-reference using \texttt{\textbackslash ref}, not directional language like \enquote{the figure below}.
+
+\auLead{Example:} Figure~\ref{fig:calabiyau} demonstrates the implementation above.\quad \GreenText{Good alt:} \enquote{Aubie the Tiger high-fiving children outside the stadium.}\quad \RedText{Poor alt:} \enquote{Image428.jpg.}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\linewidth,
+    alt={A three-dimensional cross-section of a Calabi-Yau manifold: many curved petal-like sheets in shades of blue, teal, and yellow-green that fold and join near a central hub, with an approximate five-fold symmetry}]%
+    {figures/calabi-yau.png}
+  \caption[A Calabi-Yau manifold cross-section]{A two-dimensional
+    cross-section of a Calabi-Yau manifold---the Fermat quintic
+    $z_1^{5} + z_2^{5} = 1$---projected from four dimensions to three;
+    colour shows the projected-out fourth coordinate.}
+  \label{fig:calabiyau}
+\end{figure}
+
+%---------------------------------------------------------------------
+\subsection{Tables}
+\label{subsec:tables}
+
+\auLead{Why:} Without designated header rows, a table is read as a continuous stream of data. With headers marked, the screen reader announces context (e.g., \enquote{Krull dimension: 2}) as it enters a new cell. 
+
+\auLead{How:} Add a setup line immediately before your \texttt{tabular} environment to declare the header rows. Wrap individual header cells in \texttt{\textbackslash auhead}.
+
+\begin{Verbatim}
+\begin{table}[htbp]
+  \centering
+  \caption{Some rings and their properties.}
+  \label{tab:rings}
+  \tagpdfsetup{table/header-rows=1} % {1,2} for two header rows
+  \begin{tabular}{lcc}
+    \toprule
+    \auhead{Ring} & \auhead{Krull dim} & \auhead{UFD?} \\
+    \midrule
+    $\mathbb{Z}$ & 1 & yes \\
+    ...
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{Verbatim}
+
+Tables are for data, not visual alignment. If you must use a \texttt{tabular} environment purely for layout, instruct the screen reader to ignore the grid by adding \verb|\tagpdfsetup{table/tagging=presentation}| before it.
+
+\auLead{Example:} In Table~\ref{tab:rings}, the header row is properly tagged, allowing a screen reader to identify the column category per cell.
+
+\begin{table}[htbp]
+  \centering
+  \caption[Some rings and their properties]{Some commutative rings, with
+    their Krull dimension and whether they are unique factorization
+    domains (UFDs).}
+  \label{tab:rings}
+  \tagpdfsetup{table/header-rows=1}
+  \begin{tabular}{lcc}
+    \toprule
+    \auhead{Ring $R$} & \auhead{Krull dimension} & \auhead{UFD?} \\
+    \midrule
+    $\mathbb{Z}$           & 1 & yes \\
+    $k[x,y]$               & 2 & yes \\
+    $k[x,y]/(y^{2}-x^{3})$ & 1 & no  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+%---------------------------------------------------------------------
+\subsection{Colour}
+\label{subsec:colour}
+
+\auLead{Why:} WCAG mandates strict minimum contrast ratios and prohibits using colour as the sole method of conveying information. 
+
+\auLead{How:} Keep primary body text black. For added colour, select dark shades that meet the requirements in Table~\ref{tab:contrast} (pure red, green, and yellow fail on white). Ensure any colour cue is paired with a secondary indicator, such as specific wording, shapes, or font weight.
+
+\begin{Verbatim}
+\definecolor{AccessibleNavy}{RGB}{16,45,98} % ~12:1
+\colorlet{AccessibleRed}{red!80!black}      % ~5.9:1
+\colorlet{AccessibleGreen}{green!40!black}  % ~7.2:1
+\end{Verbatim}
+
+\auLead{Example:} The navy lead-ins, green \GreenText{Right:}, and red \RedText{Wrong:} markers in this manual utilize accessible shades and bold text, ensuring colour is never the only visual cue. In plots, distinguish series by line dashes or marker shapes, not just hue.
+
+\begin{table}[htbp]
+  \centering
+  \caption[WCAG 2.1 contrast minimums]{Minimum contrast ratios required
+    by WCAG 2.1.}
+  \label{tab:contrast}
+  \tagpdfsetup{table/header-rows=1}
+  \begin{tabular}{lc}
+    \toprule
+    \auhead{Text} & \auhead{Minimum ratio} \\
+    \midrule
+    Normal, Level AA  & 4.5:1 \\
+    Large, Level AA   & 3:1 \\
+    Normal, Level AAA & 7:1 \\
+    Large, Level AAA  & 4.5:1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+%---------------------------------------------------------------------
+\subsection{Links}
+\label{subsec:links}
+
+\auLead{Why:} Vague phrases like \enquote{click here} provide screen-reader users with no context about a link's destination.
+
+\auLead{How:} Use descriptive language that identifies the destination. The \texttt{\textbackslash hrefu} command automatically underlines the link for visual clarity.
+
+\begin{Verbatim}
+\hrefu{<destination URL>}
+      {the author's homepage}
+\end{Verbatim}
+
+\auLead{Example:} \GreenText{Right:} Visit \hrefu{https://webhome.auburn.edu/~zzw0109/}{the author's homepage}.\quad
+\RedText{Wrong:} \enquote{To visit the homepage, \hrefu{https://webhome.auburn.edu/~zzw0109/}{click here}}.
+
+%---------------------------------------------------------------------
+\subsection{Lists}
+\label{subsec:lists}
+
+\auLead{Why:} A properly formatted list announces its structure (e.g., \enquote{list, 3 items}). Manually typing dashes provides no structural metadata.
+
+\auLead{How:} Use standard LaTeX environments (\texttt{itemize}, \texttt{enumerate}, or \texttt{description}). They are automatically tagged.
+
+\begin{Verbatim}
+\begin{itemize}
+  \item First point
+  \item Second point
+\end{itemize}
+\end{Verbatim}
+
+\auLead{Example:}
+\begin{itemize}
+  \item First point.
+  \item Second point.
+  \item Third point.
+\end{itemize}
+
+%---------------------------------------------------------------------
+\subsection{Mathematics}
+\label{subsec:math}
+
+\auLead{Why:} Screen readers often ignore standard equations in PDFs. This template resolves the issue natively, ensuring equations are read aloud as mathematics.
+
+\auLead{How:} Write math normally using \texttt{equation}, \texttt{align}, or inline \verb|$...$|. No special per-equation tags are needed.
+
+\auLead{Example:}
+\begin{equation}
+  \label{eq:euler}
+  e^{i\pi} + 1 = 0, \qquad \int_{0}^{1} x^{2}\,dx = \frac{1}{3}.
+\end{equation}
+
+\begin{theorem}[Splitting]
+  \label{thm:split}
+  Every short exact sequence of vector spaces splits.
+\end{theorem}
+
+%---------------------------------------------------------------------
+\subsection{Code}
+\label{subsec:code}
+
+\auLead{Why:} The \texttt{Verbatim} environment is fully tagged. Packages like \texttt{listings} and \texttt{minted} generate untagged content and will fail accessibility checks.
+
+\auLead{How:} Standardize on \texttt{Verbatim} for all code blocks.
+
+\begin{Verbatim}
+def greet(name):
+    return f"Hello, {name}!"
+\end{Verbatim}
+
+%=====================================================================
+\section{The rest is automatic}
+\label{sec:text}
+
+The template handles typography, spacing, margins, and pagination automatically. Just keep two final best practices in mind:
+
+\begin{itemize}
+  \item Mark foreign language phrases using \verb|\foreignlanguage{french}{...}|. This ensures screen readers apply correct pronunciation rules.
+  \item Convey emphasis through word choice and font weight, never by relying exclusively on colour or ALL CAPS.
+\end{itemize}
+
+\noindent That concludes the toolkit. Chapter~\ref{chap:sample} puts these building blocks to work.

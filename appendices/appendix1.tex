@@ -1,0 +1,51 @@
+\chapter{A Minimal Accessible Preamble}
+\label{app:minimal}
+
+You do not need this whole class to make an accessible document. The
+skeleton below is the smallest starting point: the metadata line, the Lua
+font and math setup, and the two content rules (alt text, table headers).
+Compile it with LuaLaTeX.
+
+% commandchars typesets the leading backslashes via |textbackslash() so the
+% source has no literal class/metadata command; the printed example is
+% identical, but Overleaf will not mistake this appendix for a "main document".
+\begin{Verbatim}[numbers=left,commandchars=\|\(\)]
+|textbackslash()DocumentMetadata{lang=en-US,
+  pdfstandard=ua-1, tagging=on}
+|textbackslash()documentclass{article}
+\usepackage{fontspec}      % LuaLaTeX fonts
+\usepackage{unicode-math}  % MathML for math
+\usepackage{graphicx}
+\usepackage{booktabs}
+\begin{document}
+
+\section{A heading}
+Some text, and math $e^{i\pi}+1=0$.
+
+\begin{figure}\centering
+  \includegraphics[width=.5\linewidth,
+    alt={Describe the image}]{pic}
+  \caption{Why this figure is here.}
+\end{figure}
+
+\tagpdfsetup{table/header-rows={1}}
+\begin{tabular}{lr}
+  \toprule
+  Name & Value \\
+  \midrule
+  A & 1 \\
+  \bottomrule
+\end{tabular}
+
+\end{document}
+\end{Verbatim}
+
+\section{Where to read more}
+\label{sec:more}
+
+The accessibility machinery used here comes from the \LaTeX\ Tagging
+Project. For the authoritative, continually updated instructions, see
+\hrefu{https://latex3.github.io/tagging-project/}{the Tagging Project
+documentation}, and for a richly commented article/slides example see
+\hrefu{https://github.com/rhstanton/accessible_LaTeX}{the
+\texttt{accessible\_LaTeX} repository}.

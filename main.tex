@@ -1,0 +1,93 @@
+% ======================================================================
+%  ACCESSIBILITY METADATA -- MUST BE THE VERY FIRST LINE OF THE FILE
+%  (before \documentclass, before everything except these comments).
+%  This is what turns on tagged-PDF output for WCAG 2.1 AA / PDF/UA-1.
+%  Do NOT delete it, and keep compiling with LuaLaTeX.
+% ======================================================================
+\DocumentMetadata{
+  lang        = en-US,  % document language (screen readers announce it)
+  pdfstandard = ua-1,   % PDF/UA-1 accessibility conformance target
+  tagging     = on,     % build the tag structure tree + MathML
+}
+
+%% ======================================================================
+%%  Auburn University Thesis / Dissertation -- accessible LuaLaTeX template
+%%
+%%  COMPILE WITH LuaLaTeX (required -- not pdflatex/xelatex):
+%%      latexmk -lualatex main.tex
+%%
+%%  ON OVERLEAF: Menu -> Compiler -> LuaLaTeX, and Menu -> TeX Live version
+%%      -> the latest. The project is fully self-contained: every font
+%%      (Source Sans 3 for the body; STIX Two Math for formulas;
+%%      Atkinson Hyperlegible Mono for code) is bundled in fonts/
+%%      together with its OFL licence.
+%%
+%%  THIS IS THE QUIET VARIANT WITH ACCESSIBLE SIGNPOST COLOUR: the body is
+%%  black, no running header, no rules, every visible size 12 pt, page
+%%  numbers centred at the bottom, hierarchy carried by weight and space.
+%%  The only colour is on the teaching signposts -- the "Why:"/"How:" and
+%%  "Good:"/"Poor:" labels -- in WCAG-AA shades, always paired with a bold
+%%  word so colour is never the sole cue. (Version 9 is the all-black one.)
+%%
+%%  Class options (see auburn-thesis.cls):
+%%      dissertation | thesis            (title-page wording)
+%%      doublespacing | onehalfspacing | singlespacing
+%%      binding                          (1.5" left margin for bound copies)
+%% ======================================================================
+\documentclass[dissertation,doublespacing]{auburn-thesis}
+
+%% --- Bibliography database --------------------------------------------
+\addbibresource{references.bib}
+
+%% --- Work on one chapter at a time (optional, for DRAFTING only) ------
+%% Each chapter is \include'd below, so you can build just one with
+%% \includeonly (cross-references to the others come from their .aux files,
+%% so compile the whole thesis once first). CAVEAT: the PDF tagging engine
+%% does not support \includeonly, so to use it you must ALSO turn tagging
+%% off -- comment out "tagging = on" in \DocumentMetadata above. Restore
+%% tagging and remove \includeonly for the final, accessible PDF.
+% \includeonly{chapters/chapter3}
+
+%% =====================  TITLE-PAGE INFORMATION  =======================
+\auTitle{An Accessible (WCAG 2.1 AA) LaTeX Template for Auburn University Theses and Dissertations}
+\auAuthor{Franklin Wang}
+\auDegree{Doctor of Philosophy}            % e.g. Master of Science
+\auGradDate{May 14, 2026}                   % Month day, year
+\auKeywords{accessibility, WCAG 2.1 AA, tagged PDF, LaTeX, Auburn University}
+\auCopyrightYear{2026}                       % optional; comment out to omit
+
+% First "Approved by" line is the committee chair (include "Chair"):
+\auChair{Dr. Ash Abebe, Chair, Professor of Mathematics and Statistics}
+% Then one line per remaining committee member, in order:
+\auCommitteeMember{Libby Anderson, Communications \& Marketing Specialist III}
+\auCommitteeMember{Dr. Maria Witte, Professor of Adult Education}
+\auCommitteeMember{Dr. Michael Brown, Associate Professor of Mathematics and Statistics}
+
+
+\begin{document}
+
+%% =========================  FRONT MATTER  =============================
+\auMakeTitlePage                        % title page (counted, not numbered)
+\input{frontmatter/abstract}                  % required
+\input{frontmatter/ai-use-disclosure}         % required
+\input{frontmatter/acknowledgments}           % optional
+\auTableOfContents                            % required
+\auListOfTables                               % include if the document has tables
+\auListOfFigures                              % include if the document has figures
+\input{frontmatter/list-of-abbreviations}     % optional
+
+
+%% =============================  BODY  =================================
+\include{chapters/chapter1}   % Ch. 1: why accessibility (the motivation)
+\include{chapters/chapter2}   % Ch. 2: what to do and how, with examples
+\include{chapters/chapter3}   % Ch. 3: a full sample chapter (replace me)
+
+
+
+%% =========================  BACK MATTER  ==============================
+\printbibliography[heading=auetd, title={References}]   % required
+
+\auAppendices                           % relabels chapters as "Appendix N"
+\include{appendices/appendix1}          % optional
+
+\end{document}

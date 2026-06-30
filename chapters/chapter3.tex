@@ -1,0 +1,498 @@
+% NOTE: avoid commas in \chapter titles -- a TeX Live 2025 tagging bug
+% misparses them as a key list (see the pitfalls list in Chapter 4).
+\chapter{A Sample Chapter: Sheaves and Sheafification}
+\label{chap:sample}
+
+This chapter is a demonstration. It is a short, self-contained
+introduction to sheaves, in the spirit of \textcite{vakil2017}, and at
+the same time it applies every building block of
+Chapter~\ref{chap:blocks} in context: definitions, propositions, and
+theorems with proofs; displayed equations; three figures with alt text,
+one of them a commutative diagram; a table with a header row; a code
+listing; links; footnotes; a block quotation; all three kinds of list;
+and headings down to level four. Replace it with your own writing; keep
+the patterns.
+
+\section{Presheaves}
+\label{sec:presheaves}
+
+A sheaf is a bookkeeping device for local information: it records the
+data that live over each open set of a space, and how those data
+restrict to smaller open sets~\autocite{vakil2017,hartshorne1977}.
+
+\begin{definition}[Presheaf]
+  \label{def:presheaf}
+  Let $X$ be a topological space. A \emph{presheaf} $\mathcal{F}$ of
+  abelian groups on $X$ assigns to each open set $U \subseteq X$ an
+  abelian group $\mathcal{F}(U)$, and to each inclusion of open sets
+  $V \subseteq U$ a \emph{restriction} homomorphism
+  $\operatorname{res}_{U,V} \colon \mathcal{F}(U) \to \mathcal{F}(V)$,
+  such that $\operatorname{res}_{U,U} = \operatorname{id}$ and, for
+  $W \subseteq V \subseteq U$,
+  \begin{equation}
+    \label{eq:functorial}
+    \operatorname{res}_{V,W} \circ \operatorname{res}_{U,V}
+    = \operatorname{res}_{U,W}.
+  \end{equation}
+\end{definition}
+
+Elements of $\mathcal{F}(U)$ are called \emph{sections} of
+$\mathcal{F}$ over $U$, and one writes $s|_{V}$ for
+$\operatorname{res}_{U,V}(s)$.
+
+\begin{example}
+  \label{ex:cont}
+  On any space $X$, let $\mathcal{C}(U)$ be the continuous functions
+  $U \to \mathbb{R}$, with the usual restriction of functions.
+  Restricting in two steps is the same as restricting in one, which is
+  exactly~\eqref{eq:functorial}, so $\mathcal{C}$ is a presheaf.
+\end{example}
+
+\section{Sheaves}
+\label{sec:sheaves-def}
+
+A sheaf is a presheaf whose sections are determined by local data.
+
+\begin{definition}[Sheaf]
+  \label{def:sheaf}
+  A presheaf $\mathcal{F}$ on $X$ is a \emph{sheaf} if, for every open
+  $U \subseteq X$ and every open cover $U = \bigcup_i U_i$:
+  \begin{enumerate}
+    \item \textbf{Identity.} If $s, t \in \mathcal{F}(U)$ satisfy
+          $s|_{U_i} = t|_{U_i}$ for all $i$, then $s = t$.
+    \item \textbf{Gluing.} If sections $s_i \in \mathcal{F}(U_i)$ agree
+          on overlaps---$s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j}$ for
+          all $i, j$---then some $s \in \mathcal{F}(U)$ has
+          $s|_{U_i} = s_i$ for all $i$.
+  \end{enumerate}
+\end{definition}
+
+Together the axioms say: compatible local data patch to a unique global
+datum.
+
+\begin{example}
+  \label{ex:contsheaf}
+  The presheaf $\mathcal{C}$ of continuous functions is a sheaf.
+  Continuity is a local condition, so functions that agree on overlaps
+  glue to a unique continuous function.
+\end{example}
+
+\begin{example}[A presheaf that is not a sheaf]
+  \label{ex:bounded}
+  On $X = \mathbb{R}$, let $\mathcal{B}(U)$ be the \emph{bounded}
+  continuous functions on $U$. Cover $\mathbb{R}$ by the intervals
+  $U_n = (-n, n)$ and take $s_n = x|_{U_n}$, bounded on each $U_n$. The
+  $s_n$ agree on overlaps, but the only function they could glue to is
+  $x$ itself, which is not bounded on $\mathbb{R}$. Gluing fails,
+  because boundedness is not a local condition.
+\end{example}
+
+\begin{example}[The constant presheaf]
+  \label{ex:constpre}
+  Fix an abelian group $A$ with at least two elements. The
+  \emph{constant presheaf} sets $\mathcal{F}(U) = A$ for every nonempty
+  open $U$ and $\mathcal{F}(\emptyset) = 0$, with identity restrictions
+  between nonempty sets. Suppose $U = U_1 \sqcup U_2$ is a disjoint
+  union of nonempty open sets, and pick $a \neq b$ in $A$. The sections
+  $a \in \mathcal{F}(U_1)$ and $b \in \mathcal{F}(U_2)$ agree on the
+  overlap $U_1 \cap U_2 = \emptyset$, where both restrict to $0$---but
+  no single element of $A$ restricts to $a$ on $U_1$ and to $b$ on
+  $U_2$. Gluing fails.
+\end{example}
+
+Table~\ref{tab:sheaves} collects these examples and two more. The
+pattern: a presheaf is a sheaf exactly when its defining condition is
+local. Two standard places to read further are
+\hrefu{https://stacks.math.columbia.edu/tag/006A}{the Stacks Project,
+Tag 006A}~\autocite{stacksproject} and the sheaf chapter of
+\hrefu{https://math.stanford.edu/~vakil/216blog/}{\emph{The Rising
+Sea}}~\autocite{vakil2017}.
+
+\begin{table}[htbp]
+  \centering
+  \caption[Presheaves and sheaves]{Some presheaves on
+    $X = \mathbb{R}$, and whether they are sheaves.}
+  \label{tab:sheaves}
+  \tagpdfsetup{table/header-rows={1}}
+  \begin{tabular}{lcl}
+    \toprule
+    \auhead{Presheaf $\mathcal{F}(U)$} & \auhead{Sheaf?} & \auhead{Reason} \\
+    \midrule
+    continuous functions       & yes & continuity is local \\
+    smooth functions           & yes & smoothness is local \\
+    locally constant functions & yes & the condition is local \\
+    bounded functions          & no  & gluing fails (Ex.~\ref{ex:bounded}) \\
+    constant presheaf $A$      & no  & gluing fails (Ex.~\ref{ex:constpre}) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Stalks and germs}
+\label{sec:stalks}
+
+What does a sheaf know about a single point? Everything that happens
+arbitrarily close to it.
+
+\begin{definition}[Stalk]
+  \label{def:stalk}
+  The \emph{stalk} of a presheaf $\mathcal{F}$ at a point $p \in X$ is
+  the direct limit over the open neighbourhoods of $p$,
+  \begin{equation}
+    \label{eq:stalk}
+    \mathcal{F}_p \;=\; \varinjlim_{p \,\in\, U} \mathcal{F}(U),
+  \end{equation}
+  taken along the restriction maps (Figure~\ref{fig:stalk}).
+\end{definition}
+
+Concretely, an element of $\mathcal{F}_p$ is represented by a pair
+$(U, s)$ with $p \in U$ and $s \in \mathcal{F}(U)$; two pairs $(U, s)$
+and $(V, t)$ represent the same element when
+\begin{equation}
+  \label{eq:germ}
+  s|_W = t|_W
+  \qquad\text{for some open } W \subseteq U \cap V \text{ with } p \in W.
+\end{equation}
+This common element is the \emph{germ} of $s$ at $p$. Two sections have
+the same germ exactly when they agree on some neighbourhood of $p$,
+however small (Figure~\ref{fig:germ}).
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.74\linewidth,
+    alt={An ellipse labelled X contains three nested dashed ellipses
+      labelled U one, U two, U three, shrinking toward a marked point p.
+      Below the picture, a chain of maps: F of U one, to F of U two, to
+      F of U three, and so on, ending in the stalk F sub p.}]%
+    {figures/stalk.pdf}
+  \caption[The stalk at a point]{The stalk $\mathcal{F}_p$ is the limit
+    of the groups $\mathcal{F}(U)$ over smaller and smaller
+    neighbourhoods $U$ of $p$.}
+  \label{fig:stalk}
+\end{figure}
+
+\begin{example}
+  \label{ex:germs}
+  For real-analytic functions, the germ at $p$ carries the same
+  information as the Taylor series at $p$. For smooth functions the
+  germ remembers strictly more.\footnote{The classic example is
+  $f(x) = e^{-1/x^{2}}$, with $f(0) = 0$: it is smooth and nonzero
+  arbitrarily close to $0$, yet every term of its Taylor series at $0$
+  vanishes---the germ sees what the series cannot.}
+\end{example}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.74\linewidth,
+    alt={Graphs of two functions, f drawn solid and g drawn dashed, over
+      an interval. Inside a shaded band around a marked point p the two
+      graphs coincide; outside the band they separate.}]%
+    {figures/germ.pdf}
+  \caption[Two functions with the same germ]{Two functions with the same
+    germ at $p$: they agree on a neighbourhood of $p$, and may do as
+    they please elsewhere.}
+  \label{fig:germ}
+\end{figure}
+
+For a sheaf---not a mere presheaf---the germs collectively remember
+everything:
+
+\begin{proposition}[Sections are determined by their germs]
+  \label{prop:germs-determine}
+  Let $\mathcal{F}$ be a sheaf and $U$ open. The map
+  $\mathcal{F}(U) \to \prod_{p \in U} \mathcal{F}_p$ sending a section
+  to its family of germs is injective.
+\end{proposition}
+
+\begin{proof}
+  If $s, t \in \mathcal{F}(U)$ have the same germ at every $p \in U$,
+  then each point has a neighbourhood on which $s$ and $t$ agree. These
+  neighbourhoods cover $U$, so $s = t$ by the identity axiom.
+\end{proof}
+
+This is the precise sense in which a sheaf is local: a section is
+nothing more than a compatible family of germs---which is exactly the
+description that sheafification, in
+Section~\ref{sec:sheafification}, will turn into a definition.
+
+A small vocabulary, for reference:
+\begin{description}[leftmargin=6em]
+  \item[Section] an element of $\mathcal{F}(U)$: one piece of data over
+        the open set $U$.
+  \item[Restriction] the map $\mathcal{F}(U) \to \mathcal{F}(V)$ that
+        forgets everything outside $V$.
+  \item[Germ] the equivalence class of a section near a point.
+  \item[Stalk] the group of all germs at a point.
+\end{description}
+
+\section{Sheafification}
+\label{sec:sheafification}
+
+Natural constructions often produce presheaves that are not
+sheaves---the constant presheaf is the standard example.
+Sheafification repairs this, changing as little as possible.
+
+\subsection{The universal property}
+\label{sec:univ}
+
+\begin{theorem}[Sheafification]
+  \label{thm:sheafification}
+  Let $\mathcal{F}$ be a presheaf on $X$. There exist a sheaf
+  $\mathcal{F}^{\mathrm{sh}}$ and a morphism
+  $\operatorname{sh} \colon \mathcal{F} \to \mathcal{F}^{\mathrm{sh}}$
+  such that every morphism from $\mathcal{F}$ to a sheaf factors
+  uniquely through $\operatorname{sh}$. Moreover, $\operatorname{sh}$
+  is an isomorphism on every stalk:
+  \begin{equation}
+    \label{eq:stalkiso}
+    \mathcal{F}_p \xrightarrow{\;\sim\;} (\mathcal{F}^{\mathrm{sh}})_p
+    \qquad\text{for all } p \in X.
+  \end{equation}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  Build $\mathcal{F}^{\mathrm{sh}}$ out of compatible families of
+  germs: for $U$ open, let
+  \begin{equation}
+    \label{eq:shconstruction}
+    \mathcal{F}^{\mathrm{sh}}(U) \;=\;
+    \Bigl\{\, (s_p)_{p \in U} \in \textstyle\prod_{p \in U} \mathcal{F}_p
+    \;:\; \text{the family is locally a section} \,\Bigr\},
+  \end{equation}
+  where \enquote{locally a section} means every point of $U$ has a
+  neighbourhood $V$ and a section $t \in \mathcal{F}(V)$ whose germ at
+  each $q \in V$ is $s_q$. The identity axiom holds because a section
+  here is a family indexed by the points of $U$; the gluing axiom holds
+  because membership in~\eqref{eq:shconstruction} is a local condition.
+  The map $\operatorname{sh}$ sends a section to its family of germs,
+  and the universal property and~\eqref{eq:stalkiso} follow by unwinding
+  the definitions. Details are in
+  \textcite[Section~II.1]{hartshorne1977} or \textcite{vakil2017}.
+\end{proof}
+
+Three facts worth keeping in mind:
+\begin{itemize}
+  \item Sheafification changes nothing at any stalk---only how local
+        data assemble into sections.
+  \item If $\mathcal{F}$ is already a sheaf, $\operatorname{sh}$ is an
+        isomorphism.
+  \item The construction is idempotent:
+        $(\mathcal{F}^{\mathrm{sh}})^{\mathrm{sh}}
+        \cong \mathcal{F}^{\mathrm{sh}}$, canonically.
+\end{itemize}
+
+\subsection{Worked examples}
+\label{sec:worked}
+
+\subsubsection{The constant presheaf, repaired}
+\label{sec:constant-repaired}
+
+Let $A$ be an abelian group and $\mathcal{F}$ the constant presheaf of
+Example~\ref{ex:constpre}. Every stalk is $A$, so
+by~\eqref{eq:shconstruction} the sheafification is the sheaf of
+\emph{locally constant} functions $U \to A$, written $\underline{A}$.
+On an open subset of $\mathbb{R}$ with $n$ connected components,
+\begin{equation}
+  \label{eq:components}
+  \underline{A}(U) \cong A^{\,n},
+\end{equation}
+one constant per component.
+
+\begin{corollary}
+  \label{cor:twopoints}
+  Let $X = \{1, 2\}$ with the discrete topology. The constant presheaf
+  $\mathbb{Z}$ has global sections $\mathbb{Z}$, while its
+  sheafification has global sections
+  $\underline{\mathbb{Z}}(X) \cong \mathbb{Z} \oplus \mathbb{Z}$.
+  Sheafification can change global sections, even though it changes no
+  stalk.
+\end{corollary}
+
+\subsubsection{How to recognise a sheafification}
+\label{sec:recognise}
+
+In practice one rarely uses~\eqref{eq:shconstruction} directly. The
+working tool is a standard fact: a morphism of \emph{sheaves} that is an
+isomorphism on every stalk is an isomorphism. To identify
+$\mathcal{F}^{\mathrm{sh}}$:
+\begin{enumerate}
+  \item compute the stalks of $\mathcal{F}$;
+  \item find a sheaf $\mathcal{G}$ and a morphism
+        $\mathcal{F} \to \mathcal{G}$ inducing an isomorphism on every
+        stalk;
+  \item conclude that $\mathcal{G} \cong \mathcal{F}^{\mathrm{sh}}$:
+        Theorem~\ref{thm:sheafification} factors the morphism through a
+        map $\mathcal{F}^{\mathrm{sh}} \to \mathcal{G}$ of sheaves that
+        is still an isomorphism on every stalk---so, by the standard
+        fact, an isomorphism.
+\end{enumerate}
+
+\section{Morphisms and the snake lemma}
+\label{sec:snake}
+
+Sheaves on $X$ form a category, and a remarkably well-behaved one: the
+sheaves of abelian groups form an \emph{abelian} category, so kernels,
+cokernels, exact sequences, and diagram chases all make
+sense~\autocite[\S 2.6]{vakil2017}.
+
+\begin{definition}[Morphism of sheaves]
+  \label{def:morphism}
+  A \emph{morphism} $\varphi \colon \mathcal{F} \to \mathcal{G}$ of
+  sheaves on $X$ is a homomorphism
+  $\varphi_U \colon \mathcal{F}(U) \to \mathcal{G}(U)$ for each open
+  $U$, commuting with the restriction maps. Taking limits, $\varphi$
+  induces a map $\varphi_p \colon \mathcal{F}_p \to \mathcal{G}_p$ on
+  every stalk.
+\end{definition}
+
+\begin{proposition}
+  \label{prop:kernel}
+  For any morphism $\varphi \colon \mathcal{F} \to \mathcal{G}$, the
+  presheaf $U \mapsto \ker \varphi_U$ is a sheaf.
+\end{proposition}
+
+\begin{proof}
+  Identity is inherited from $\mathcal{F}$. For gluing, compatible
+  sections $s_i \in \ker \varphi_{U_i}$ glue to some
+  $s \in \mathcal{F}(U)$; then $\varphi_U(s)|_{U_i} =
+  \varphi_{U_i}(s|_{U_i}) = 0$ for all $i$, so $\varphi_U(s) = 0$ by
+  the identity axiom in $\mathcal{G}$.
+\end{proof}
+
+The cokernel is a different story: the presheaf
+$U \mapsto \operatorname{coker} \varphi_U$ can fail to be a sheaf, and
+the cokernel of a morphism of sheaves is \emph{defined} as its
+sheafification---the first place the construction of
+Section~\ref{sec:sheafification} earns its keep. Exactness is then
+measured where sheaves live:
+
+\begin{definition}[Exact sequence]
+  \label{def:exact}
+  A sequence of sheaves
+  $\mathcal{F} \to \mathcal{G} \to \mathcal{H}$ is \emph{exact} if the
+  induced sequence of stalks
+  $\mathcal{F}_p \to \mathcal{G}_p \to \mathcal{H}_p$ is exact for
+  every $p \in X$.
+\end{definition}
+
+\subsection{The exponential sequence}
+\label{sec:exponential}
+
+Why must the cokernel be sheafified? Because a morphism can be
+surjective on every stalk yet miss sections. The classic witness lives
+on the punctured plane $X = \mathbb{C} \setminus \{0\}$. Write
+$\mathcal{O}_X$ for the sheaf of holomorphic functions and
+$\mathcal{O}_X^{\times}$ for the nowhere-vanishing ones, and let
+$\exp$ send $f$ to $e^{f}$:
+\begin{equation}
+  \label{eq:exponential}
+  0 \longrightarrow \underline{2\pi i\,\mathbb{Z}}
+    \longrightarrow \mathcal{O}_X
+    \xrightarrow{\ \exp\ } \mathcal{O}_X^{\times}
+    \longrightarrow 0 .
+\end{equation}
+The kernel is the locally constant sheaf of
+Section~\ref{sec:worked}: $e^{f} = 1$ exactly when $f$ takes values in
+$2\pi i\,\mathbb{Z}$. The sequence is exact: on a small disc every
+nowhere-vanishing function has a logarithm, so $\exp$ is surjective on
+every stalk. But over $X$ itself the function $g(z) = z$ has no
+logarithm, so $\exp_X$ is not surjective on global sections---and the
+image presheaf $U \mapsto \exp \mathcal{O}_X(U)$ fails gluing in
+exactly the manner of Example~\ref{ex:bounded}: cover $X$ by two slit
+planes, take the restrictions of $z$, and the local logarithms refuse
+to patch.
+
+\subsection{The snake lemma}
+\label{sec:snakelemma}
+
+The reward for setting up an abelian category is that the standard
+tools of homological algebra apply verbatim. The first and most famous
+is the snake lemma~\autocite[\S 1.7]{vakil2017}.
+
+\begin{theorem}[Snake lemma]
+  \label{thm:snake}
+  In an abelian category---sheaves of abelian groups included---suppose
+  the rows of the commutative diagram in Figure~\ref{fig:snake} are
+  exact. Then there is a connecting morphism $\delta$ making the
+  sequence
+  \begin{equation}
+    \label{eq:snakeseq}
+    0 \to \ker f \to \ker g \to \ker h
+      \xrightarrow{\ \delta\ }
+      \operatorname{coker} f \to \operatorname{coker} g
+      \to \operatorname{coker} h \to 0
+  \end{equation}
+  exact.
+\end{theorem}
+
+\begin{proof}[Proof idea]
+  A diagram chase, best performed personally rather than
+  read.\footnote{The chase even has a film credit: the snake lemma is
+  proved on screen in the opening scene of \emph{It's My Turn} (1980).}
+  Chase an element of $\ker h$ through Figure~\ref{fig:snake}: lift it
+  to $B$, push it down to $B'$, observe that it comes from a unique
+  element of $A'$, and define $\delta$ to be its class in
+  $\operatorname{coker} f$.
+\end{proof}
+
+\begin{figure}[htbp]
+  \centering
+  % The diagram is drawn in LaTeX with tikz-cd (no external image). \auCDFigure
+  % (defined in the class) tags it as a Figure with the Alt text below, and
+  % makes tikz-cd safe under PDF math tagging. Edit the diagram here directly.
+  \auCDFigure{A commutative diagram with four rows. The middle two rows are
+      short exact sequences, zero to A to B to C to zero, and zero to A
+      prime to B prime to C prime to zero, joined by vertical maps f, g,
+      h. Above them sit the kernels of f, g, h; below them the cokernels.
+      A single long arrow labelled delta runs from the kernel of h at the
+      upper right, around the top and down the left of the diagram, to the
+      cokernel of f at the lower left.}{%
+    \begin{tikzcd}[ampersand replacement=\&, row sep=2.6em, column sep=2.2em]
+    \& \ker f \arrow[r]\arrow[d] \& \ker g \arrow[r]\arrow[d] \& \ker h \arrow[d] \& \\
+    0 \arrow[r] \& A  \arrow[r]\arrow[d,"f"'] \& B  \arrow[r]\arrow[d,"g"'] \& C  \arrow[r]\arrow[d,"h"'] \& 0 \\
+    0 \arrow[r] \& A' \arrow[r]\arrow[d]      \& B' \arrow[r]\arrow[d]      \& C' \arrow[r]\arrow[d]      \& 0 \\
+    \& \operatorname{coker} f \arrow[r] \& \operatorname{coker} g \arrow[r] \& \operatorname{coker} h \&
+    \arrow[from=1-4, to=4-2, rounded corners=6pt,
+      "\delta"{pos=0.5, fill=white, inner sep=2pt},
+      to path={ (\tikztostart.north) -- ([yshift=0.8em]\tikztostart.north)
+                -| ([xshift=-3.4em]\tikztotarget.west)
+                |- (\tikztotarget.west) \tikztonodes }]
+    \end{tikzcd}}
+  \caption[The snake lemma]{The snake lemma. The connecting morphism
+    $\delta$ gives the lemma its name.}
+  \label{fig:snake}
+\end{figure}
+
+\begin{remark}
+  \label{rem:cohomology}
+  The snake lemma is the seed of sheaf cohomology: it is the engine
+  that produces long exact sequences from short ones. Applied
+  to~\eqref{eq:exponential}, it explains where the missing logarithm
+  went---the failure of $\exp$ on global sections is measured by the
+  first cohomology of $\underline{2\pi i\,\mathbb{Z}}$, which on the
+  punctured plane records precisely the winding number.
+\end{remark}
+
+\subsubsection{By machine: a first taste of cohomology}
+\label{sec:m2cohomology}
+
+The machinery is already on your computer. In
+Macaulay2~\autocite{M2}, the cohomology of line bundles on the
+projective line takes three lines:
+
+\begin{Verbatim}
+R = QQ[x,y];        -- homogeneous coordinates
+X = Proj R;         -- the projective line
+HH^0(OO_X(2))       -- global sections: QQ^3
+\end{Verbatim}
+
+\noindent Macaulay2 answers $\mathbb{Q}^{3}$---the quadratics $x^{2}$,
+$xy$, $y^{2}$---and \texttt{HH\^{}1(OO\_X(-2))} likewise returns
+$\mathbb{Q}^{1}$. Where those numbers come from is the business of the
+next course; that they come out of the definitions in this chapter is
+the point.
+
+As an aside on how to read this chapter---and any mathematics:
+\begin{quotation}
+  The substance of mathematics lies in worked examples; a definition is
+  only understood once it has been turned over in the hand a few times.
+\end{quotation}
