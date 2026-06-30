@@ -2,7 +2,7 @@
     <br> <a href="README.md">English</a> | <b>中文</b>
 </p>
 
-<h1 align="center">🎓 Auburn LaTeX Template (WCAG 2.1 AA)</h1>
+<h1 align="center">Auburn LaTeX Template (WCAG 2.1 AA)</h1>
 
 <p align="center">
     <em>奥本大学学位论文 LaTeX 模板（无障碍）。</em>
@@ -18,9 +18,9 @@
   <img alt="TeX Live 2023+" src="https://img.shields.io/badge/-TeX%20Live%202023+-black?style=flat-square&logo=latex&logoColor=white" />
 </p>
 
-非官方的奥本大学电子学位论文（ETD）模板，编译生成**带标签、无障碍（PDF/UA-1）** 的 PDF。用 **LuaLaTeX** 编译；所有字体已内嵌，项目完全自包含。
+奥本大学官方电子学位论文（ETD）模板，编译生成**带标签、无障碍（PDF/UA-1）** 的 PDF。用 **LuaLaTeX** 编译；所有字体已内嵌，项目完全自包含。
 
-> 非官方模板，提交前请以 [奥本研究生院 ETD 页面](https://graduate.auburn.edu/current-students/academic-resources/etd.php) 的格式规定为准。
+> 遵循 [奥本研究生院 ETD 页面](https://graduate.auburn.edu/current-students/academic-resources/etd.php) 的格式规定。
 
 ## 预览
 
@@ -39,7 +39,11 @@
 - `references.bib` — 参考文献（biblatex / biber）
 - `figures/` — 用 `\includegraphics` 插入的图片
 
-引擎类文件别动：`auburn-thesis.cls`、`fonts/`、`.latexmkrc`。
+引擎类文件别动：
+
+- `auburn-thesis.cls` — 文档类：版式、字体、标题、页边距，以及全部 PDF 标签（无障碍）设置
+- `.latexmkrc` — 编译配置，让 `latexmk` 用 LuaLaTeX 编译并自动跑 biber 处理参考文献
+- `fonts/` — 内嵌字体（含 OFL 许可证）
 
 ## 须知
 

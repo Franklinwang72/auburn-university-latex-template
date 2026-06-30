@@ -2,7 +2,7 @@
     <br> <b>English</b> | <a href="README.zh-CN.md">中文</a>
 </p>
 
-<h1 align="center">🎓 Auburn LaTeX Template (WCAG 2.1 AA)</h1>
+<h1 align="center">Auburn LaTeX Template (WCAG 2.1 AA)</h1>
 
 <p align="center">
     <em>An accessible LaTeX template for Auburn University theses & dissertations.</em>
@@ -18,9 +18,9 @@
   <img alt="TeX Live 2023+" src="https://img.shields.io/badge/-TeX%20Live%202023+-black?style=flat-square&logo=latex&logoColor=white" />
 </p>
 
-An unofficial Auburn University ETD template that compiles to a **tagged, accessible (PDF/UA-1)** PDF. Compile with **LuaLaTeX**; all fonts are bundled, so the project is fully self-contained.
+The official Auburn University ETD template that compiles to a **tagged, accessible (PDF/UA-1)** PDF. Compile with **LuaLaTeX**; all fonts are bundled, so the project is fully self-contained.
 
-> Unofficial — check the [Auburn Graduate School ETD page](https://graduate.auburn.edu/current-students/academic-resources/etd.php) for the format rules before you submit.
+> Built to the [Auburn Graduate School ETD](https://graduate.auburn.edu/current-students/academic-resources/etd.php) format rules.
 
 ## Preview
 
@@ -39,7 +39,11 @@ Download this repository, upload it to **Overleaf**, set **Menu → Compiler →
 - `references.bib` — bibliography (biblatex / biber)
 - `figures/` — images you place with `\includegraphics`
 
-Leave the engine alone: `auburn-thesis.cls`, `fonts/`, `.latexmkrc`.
+Leave the engine alone:
+
+- `auburn-thesis.cls` — the document class: page layout, fonts, headings, margins, and all the PDF-tagging (accessibility) setup
+- `.latexmkrc` — build config that makes `latexmk` compile with LuaLaTeX and run biber for the bibliography
+- `fonts/` — the bundled fonts (with their OFL licences)
 
 ## Good to Know
 
