@@ -2,15 +2,15 @@
     <br> <b>English</b> | <a href="README.zh-CN.md">中文</a>
 </p>
 
-<h1 align="center">Auburn LaTeX Template (WCAG 2.1 AA)</h1>
+<h1 align="center">Auburn University LaTeX Template (WCAG 2.1 AA)</h1>
 
 <p align="center">
     <em>An accessible LaTeX template for Auburn University theses & dissertations.</em>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Franklinwang72/auburn-accessible-thesis/stargazers">
-    <img alt="Stars" src="https://img.shields.io/github/stars/Franklinwang72/auburn-accessible-thesis?style=flat-square" />
+  <a href="https://github.com/Franklinwang72/auburn-university-latex-template/stargazers">
+    <img alt="Stars" src="https://img.shields.io/github/stars/Franklinwang72/auburn-university-latex-template?style=flat-square" />
   </a>
   <img alt="LuaLaTeX" src="https://img.shields.io/badge/-LuaLaTeX-008080?style=flat-square&logo=latex&logoColor=white" />
   <img alt="PDF/UA-1" src="https://img.shields.io/badge/-PDF%2FUA--1-1f6feb?style=flat-square" />
