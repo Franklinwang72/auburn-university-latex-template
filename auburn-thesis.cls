@@ -9,7 +9,7 @@
 %% Poor/Wrong) so a reader can find them at a glance. Each is also a bold
 %% word, so the colour is never the only cue. Theorem/definition labels and
 %% table headers are Semibold.
-%% Unofficial LaTeX class for Auburn University Electronic Theses and
+%% Official LaTeX class for Auburn University Electronic Theses and
 %% Dissertations (ETD), built to the Graduate School format rules:
 %%   * uniform margins of at least 1" on all sides (1.5" left with the
 %%     [binding] option); major-heading pages start at the 1" top margin;
@@ -118,6 +118,12 @@
   ItalicFont  = *-Italic,  BoldItalicFont = *-BoldItalic,
   Scale = MatchLowercase,
 ]
+% babel: language support, so \foreignlanguage{<lang>}{...} can mark
+% phrases in other languages for screen readers (correct pronunciation),
+% as the manual recommends. Under LuaLaTeX babel imports other languages
+% on the fly, so \foreignlanguage{french}{...} needs no extra setup.
+% (american = US English, matching the document language en-US.)
+\RequirePackage[american]{babel}
 \RequirePackage{csquotes}   % \enquote{...} for quotation marks
 
 %% Math: unicode-math gives the LuaLaTeX tagging engine the information it needs
@@ -528,6 +534,7 @@
 \RequirePackage{bookmark} % robust PDF bookmarks (navigation outline / pane)
 \urlstyle{tt} % URLs in Atkinson Hyperlegible Mono (0/O, 1/l unambiguous)
 \newcommand{\hrefu}[2]{\href{#1}{\uline{#2}}} % underlined external hyperlink
+\newcommand{\urlu}[1]{\uline{\url{#1}}}       % underlined, clickable bare URL
 % Put the document title and author into the PDF metadata. WCAG 2.4.2
 % (Page Titled) requires a title; pdfdisplaydoctitle then shows it in the
 % viewer's title bar instead of the file name. (\auTitle/\auAuthor are set
@@ -614,7 +621,7 @@
   \markboth{}{#1}%
   \stepcounter{auetdprelim}%
   \MakeLinkTarget*{auetd-prelim-\theauetdprelim}%
-  \pdfbookmark[0]{#1}{auetd-bm-toc}% bookmark (no ToC entry)
+  \pdfbookmark[0]{#1}{auetd-bm-\theauetdprelim}% bookmark (no ToC entry)
 }
 % unstarred form: also recorded in the ToC and the PDF bookmarks
 \newcommand{\auetd@prelim@toc}[1]{%

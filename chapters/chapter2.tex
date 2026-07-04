@@ -45,8 +45,12 @@ There are exactly eight core elements you must format manually. Master these eig
 \subsubsection{...}  % Heading 4
 \end{Verbatim}
 
-\auLead{Example:} \GreenText{Right:} \verb|\section{Methods}|.\quad
-\RedText{Wrong:} \verb|{\large\bfseries Methods}|---this only mimics the visual appearance.
+\auLead{Example:}
+\begin{itemize}
+  \item \GreenText{Right:} \verb|\section{Methods}|
+  \item \RedText{Wrong:} \verb|{\large\bfseries Methods}|---this only
+        mimics the visual appearance.
+\end{itemize}
 
 %---------------------------------------------------------------------
 \subsection{Figures}
@@ -110,7 +114,11 @@ A meaningful image requires \texttt{alt=\{...\}}: provide one descriptive senten
 \end{table}
 \end{Verbatim}
 
-Tables are for data, not visual alignment. If you must use a \texttt{tabular} environment purely for layout, instruct the screen reader to ignore the grid by adding \verb|\tagpdfsetup{table/tagging=presentation}| before it.
+Tables are for data, not visual alignment. If you must use a \texttt{tabular} environment purely for layout, instruct the screen reader to ignore the grid by adding this line before it:
+
+\begin{Verbatim}
+\tagpdfsetup{table/tagging=presentation}
+\end{Verbatim}
 
 \auLead{Example:} In Table~\ref{tab:rings}, the header row is properly tagged, allowing a screen reader to identify the column category per cell.
 
