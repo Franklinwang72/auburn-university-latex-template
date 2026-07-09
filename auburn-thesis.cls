@@ -329,6 +329,43 @@
 \newcommand{\auhead}[1]{{\ausecface #1}\auetd@th@scope{Column}}
 \newcommand{\auheadrow}[1]{{\ausecface #1}\auetd@th@scope{Row}}
 
+% \tablesummary{...} -- attach a table Summary that Adobe Acrobat actually
+% reads. A table Summary is an OPTIONAL, screen-reader-only description of the
+% table's purpose/organisation (best practice for COMPLEX tables per WCAG);
+% it is NOT required by PDF/UA-1. Place it INSIDE the float, right AFTER
+% \end{tabular} (before \end{table}); for a bare tabular, immediately after.
+%
+% IMPORTANT -- what Acrobat expects: Acrobat does NOT read the ISO-standard
+% /Summary key on the Table struct element. Its "Edit Table Summary" reads and
+% writes an ATTRIBUTE dictionary referenced from the Table's /A entry, of the
+% exact form
+%       << /O /Table /Summary (the text) >>
+% with the text as a PLAIN (literal) PDF string, NOT a UTF-16 hex string.
+% (Verified by dumping a reference PDF that Acrobat itself wrote.) So we build
+% precisely that: the tagpdf "attribute" gput writes an unnamed dict object and
+% hangs it off the Table's /A -- byte-for-byte what Acrobat produces. #1's
+% spaces survive because it is a document-command argument (catcode-10 spaces);
+% ~ supplies the spaces between the dict tokens. Keep summary text plain ASCII
+% with balanced parentheses. No-op when tagging is off or the table module is
+% absent (keeps the source portable).
+\ExplSyntaxOn
+\NewDocumentCommand \tablesummary { m }
+  {
+    \tag_if_active:TF
+      {
+        \tl_if_exist:NTF \g__tbl_struct_table_tl
+          {
+            \tag_struct_gput:nnn
+              { \g__tbl_struct_table_tl }
+              { attribute }
+              { /O~/Table~/Summary~(#1) }
+          }
+          { }
+      }
+      { }
+  }
+\ExplSyntaxOff
+
 %% Code blocks are plain fancyvrb Verbatim: single-spaced monospace,
 %% no box, no background -- the change of face is the only signal.
 
@@ -508,7 +545,7 @@
 %% change the style= option below to suit your department.
 %% ----------------------------------------------------------------------
 \RequirePackage[backend=biber,style=alphabetic,sorting=nyt,giveninits=true,maxbibnames=99,doi=true,isbn=false]{biblatex}
-\setlength{\bibitemsep}{\baselineskip}
+\setlength{\bibitemsep}{0.5\baselineskip}
 \AtBeginBibliography{\singlespacing}
 
 %% ----------------------------------------------------------------------

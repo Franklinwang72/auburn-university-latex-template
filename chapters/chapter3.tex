@@ -125,6 +125,8 @@ Sea}}~\autocite{vakil2017}.
     constant presheaf $A$      & no  & gluing fails (Ex.~\ref{ex:constpre}) \\
     \bottomrule
   \end{tabular}
+  \tablesummary{Five presheaves on the real line, each marked as a sheaf or
+    not, with the reason gluing does or does not hold.}
 \end{table}
 
 \section{Stalks and germs}
@@ -139,7 +141,7 @@ arbitrarily close to it.
   the direct limit over the open neighbourhoods of $p$,
   \begin{equation}
     \label{eq:stalk}
-    \mathcal{F}_p \;=\; \varinjlim_{p \,\in\, U} \mathcal{F}(U),
+    \mathcal{F}_p \;=\; \operatorname*{colim}_{p \,\in\, U} \mathcal{F}(U),
   \end{equation}
   taken along the restriction maps (Figure~\ref{fig:stalk}).
 \end{definition}

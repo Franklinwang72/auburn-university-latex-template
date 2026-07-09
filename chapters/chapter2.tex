@@ -138,7 +138,34 @@ Tables are for data, not visual alignment. If you must use a \texttt{tabular} en
     $k[x,y]/(y^{2}-x^{3})$ & 1 & no  \\
     \bottomrule
   \end{tabular}
+  \tablesummary{Three commutative rings, each listed with its Krull dimension
+    and whether it is a unique factorization domain.}
 \end{table}
+
+\auLead{Complex tables:} For a large or multi-part table, also add a
+\emph{summary}---a short, screen-reader-only sentence describing how the table
+is organised. WCAG recommends one for complex data tables; it is optional for
+simple ones and is not required by PDF/UA. Place \texttt{\textbackslash tablesummary}
+right after \texttt{\textbackslash end\{tabular\}}, inside the float:
+
+\begin{Verbatim}
+\begin{table}[htbp]
+  \centering
+  \caption{...}
+  \tagpdfsetup{table/header-rows=1}
+  \begin{tabular}{lcc}
+    ... header row and data ...
+  \end{tabular}
+  \tablesummary{What the table shows and how it is
+    arranged, in a sentence or two.}
+\end{table}
+\end{Verbatim}
+
+This writes the summary in exactly the form Adobe Acrobat reads (a
+\texttt{/O /Table /Summary} attribute), so it appears under the table's
+\enquote{Edit Table Summary} field and is announced by screen readers, with
+nothing changed on the printed page. Keep the text plain, with balanced
+parentheses.
 
 %---------------------------------------------------------------------
 \subsection{Colour}
@@ -172,6 +199,8 @@ Tables are for data, not visual alignment. If you must use a \texttt{tabular} en
     Large, Level AAA  & 4.5:1 \\
     \bottomrule
   \end{tabular}
+  \tablesummary{WCAG 2.1 minimum contrast ratios, given by text size and
+    conformance level (AA and AAA).}
 \end{table}
 
 %---------------------------------------------------------------------
