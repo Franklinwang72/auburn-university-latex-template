@@ -30,7 +30,13 @@
 
 ## 用法
 
-下载本仓库，上传到 **Overleaf**，把 **Menu → Compiler** 选 **LuaLaTeX**、**TeX Live version** 选**最新版**，再点 **Recompile**。（必须用 LuaLaTeX，pdfLaTeX / XeLaTeX 不会给 PDF 打标签。）
+<p align="center">
+  <a href="https://github.com/Franklinwang72/auburn-university-latex-template/archive/refs/heads/main.zip">
+    <img alt="下载 ZIP" src="https://img.shields.io/badge/-Download%20ZIP-1f6feb?style=flat-square&logo=github&logoColor=white" />
+  </a>
+</p>
+
+点上方的 **Download ZIP** 下载，上传到 **Overleaf**（New Project → Upload Project），把 **Menu → Compiler** 选 **LuaLaTeX**、**TeX Live version** 选**最新版**，再点 **Recompile**。（必须用 LuaLaTeX，pdfLaTeX / XeLaTeX 不会给 PDF 打标签。）
 
 ## 改哪些文件
 

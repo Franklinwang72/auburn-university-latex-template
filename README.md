@@ -30,7 +30,13 @@ The official Auburn University ETD template that compiles to a **tagged, accessi
 
 ## Usage
 
-Download this repository, upload it to **Overleaf**, set **Menu → Compiler → LuaLaTeX** and **TeX Live version → the latest**, then **Recompile**. (LuaLaTeX is required — pdfLaTeX / XeLaTeX will not produce a tagged PDF.)
+<p align="center">
+  <a href="https://github.com/Franklinwang72/auburn-university-latex-template/archive/refs/heads/main.zip">
+    <img alt="Download ZIP" src="https://img.shields.io/badge/-Download%20ZIP-1f6feb?style=flat-square&logo=github&logoColor=white" />
+  </a>
+</p>
+
+Click **Download ZIP** above, upload the file to **Overleaf** (New Project → Upload Project), set **Menu → Compiler → LuaLaTeX** and **TeX Live version → the latest**, then **Recompile**. (LuaLaTeX is required — pdfLaTeX / XeLaTeX will not produce a tagged PDF.)
 
 ## What You Edit
 
