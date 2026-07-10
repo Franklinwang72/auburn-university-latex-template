@@ -390,12 +390,12 @@
       \nobreak\vskip0.4\baselineskip
     \fi
     {#1\par}%
-    \nobreak\vskip2.2\baselineskip}%
+    \nobreak\vskip2\baselineskip}%
 }
 \renewcommand{\@makeschapterhead}[1]{%
   {\normalfont\centering
     {#1\par}%
-    \nobreak\vskip2.2\baselineskip}%
+    \nobreak\vskip2\baselineskip}%
 }
 %% TeX Live 2025+ workaround. On recent kernels \DocumentMetadata
 %% (tagging=on) loads the new sectioning code (latex-lab-testphase-sec),
@@ -418,6 +418,14 @@
       \EditInstance{heading}{chapter}{%
         heading-decls = \centering\normalfont\aulabelface\normalsize ,
         title-decls   = \normalfont\normalsize ,
+        after-penalty-vspace = 0pt ,      % major-heading pages (Abstract, Table
+                                          % of Contents, chapters, ...) begin at
+                                          % the 1" top margin -- drop the new
+                                          % sectioning code's default 50pt of
+                                          % space above the heading (the old
+                                          % \@makechapterhead has none either).
+        after-vspace  = 2\baselineskip ,  % two blank lines between the heading
+                                          % and the first line of text/content.
       }%
     }{}%
   }%
