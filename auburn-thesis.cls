@@ -390,12 +390,12 @@
       \nobreak\vskip0.4\baselineskip
     \fi
     {#1\par}%
-    \nobreak\vskip2\baselineskip}%
+    \nobreak\vskip16pt}%
 }
 \renewcommand{\@makeschapterhead}[1]{%
   {\normalfont\centering
     {#1\par}%
-    \nobreak\vskip2\baselineskip}%
+    \nobreak\vskip16pt}%
 }
 %% TeX Live 2025+ workaround. On recent kernels \DocumentMetadata
 %% (tagging=on) loads the new sectioning code (latex-lab-testphase-sec),
@@ -424,8 +424,12 @@
                                           % sectioning code's default 50pt of
                                           % space above the heading (the old
                                           % \@makechapterhead has none either).
-        after-vspace  = 2\baselineskip ,  % two blank lines between the heading
-                                          % and the first line of text/content.
+        after-vspace  = 16pt ,            % two blank 12pt lines between
+                                          % the heading and the first line of
+                                          % text/content. A FIXED length, not
+                                          % 2\baselineskip: under doublespacing
+                                          % \baselineskip is ~25pt, which would
+                                          % double the intended gap.
       }%
     }{}%
   }%
