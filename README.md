@@ -25,7 +25,9 @@ The official Auburn University ETD template that compiles to a **tagged, accessi
 ## Preview
 
 <p align="center">
-  <img width="1000" src="preview.png" alt="Title page, a figure page, and the tagged snake-lemma diagram" />
+  <a href="preview.pdf">
+    <img width="1000" src="preview.png" alt="Title page, a figure page, and the tagged snake-lemma diagram — click to open the full PDF" />
+  </a>
 </p>
 
 ## Usage

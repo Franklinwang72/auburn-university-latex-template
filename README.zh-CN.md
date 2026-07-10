@@ -25,7 +25,9 @@
 ## 预览
 
 <p align="center">
-  <img width="1000" src="preview.png" alt="标题页、插图页，以及带标签的蛇引理交换图" />
+  <a href="preview.pdf">
+    <img width="1000" src="preview.png" alt="标题页、插图页，以及带标签的蛇引理交换图——点击打开完整 PDF" />
+  </a>
 </p>
 
 ## 用法
