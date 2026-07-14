@@ -13,12 +13,12 @@
     <img alt="Stars" src="https://img.shields.io/github/stars/Franklinwang72/auburn-university-latex-template?style=flat-square" />
   </a>
   <img alt="LuaLaTeX" src="https://img.shields.io/badge/-LuaLaTeX-008080?style=flat-square&logo=latex&logoColor=white" />
-  <img alt="PDF/UA-1" src="https://img.shields.io/badge/-PDF%2FUA--1-1f6feb?style=flat-square" />
+  <img alt="PDF/UA-2" src="https://img.shields.io/badge/-PDF%2FUA--2-1f6feb?style=flat-square" />
   <img alt="WCAG 2.1 AA" src="https://img.shields.io/badge/-WCAG%202.1%20AA-2da44e?style=flat-square" />
   <img alt="TeX Live 2023+" src="https://img.shields.io/badge/-TeX%20Live%202023+-black?style=flat-square&logo=latex&logoColor=white" />
 </p>
 
-The official Auburn University ETD template that compiles to a **tagged, accessible (PDF/UA-1)** PDF. Compile with **LuaLaTeX**; all fonts are bundled, so the project is fully self-contained.
+The official Auburn University ETD template that compiles to a **tagged, accessible (PDF/UA-2, readable MathML)** PDF. Compile with **LuaLaTeX**; all fonts are bundled, so the project is fully self-contained.
 
 > Built to the [Auburn Graduate School ETD](https://graduate.auburn.edu/current-students/academic-resources/etd.php) format rules.
 

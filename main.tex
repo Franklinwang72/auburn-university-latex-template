@@ -1,23 +1,23 @@
 % ======================================================================
 %  ACCESSIBILITY METADATA -- MUST BE THE VERY FIRST LINE OF THE FILE
 %  (before \documentclass, before everything except these comments).
-%  This is what turns on tagged-PDF output for WCAG 2.1 AA / PDF/UA-1.
+%  This is what turns on tagged-PDF output for WCAG 2.1 AA / PDF/UA-2.
 %  Do NOT delete it, and keep compiling with LuaLaTeX.
 % ======================================================================
 \DocumentMetadata{
   lang        = en-US,  % document language (screen readers announce it)
-  pdfstandard = ua-1,   % PDF/UA-1 accessibility conformance target
-  pdfversion  = 1.7,    % FORCE the file header to %PDF-1.7 so veraPDF's
-                        % PDF/UA-1 header rule (ISO 14289-1 clause 6.1)
-                        % passes, EVEN THOUGH the tagging engine still
-                        % embeds MathML via PDF-2.0 associated files (/AF).
-                        % This is a deliberate mismatch: header says 1.7,
-                        % body carries 2.0 MathML. It makes veraPDF's UA-1
-                        % profile pass while keeping the MathML layer.
-                        % NOTE: this is non-standard (a 1.7 file is not
-                        % supposed to use /AF); a stricter validator may
-                        % flag it. Remove this line for a clean file.
-  tagging     = on,     % build the tag structure tree + MathML
+  pdfstandard = ua-2,   % PDF/UA-2 (PDF 2.0): MathML goes into the tag tree
+                        % as REAL structure elements (mfrac, mi, mn, ...),
+                        % so screen readers (NVDA + Acrobat) read mathematics
+                        % naturally. Validate with PAC 2024 / veraPDF in
+                        % UA-2 mode -- a UA-1 checker will wrongly flag the
+                        % MathML types as "non-standard" and ask for formula
+                        % alt text (both are UA-1 rules that do not apply).
+  tagging     = on,
+  tagging-setup = {
+    math/setup    = {mathml-AF,mathml-SE},  % MathML as attachments AND tags
+    extra-modules = {verbatim-mo},
+  }
 }
 
 %% ======================================================================
