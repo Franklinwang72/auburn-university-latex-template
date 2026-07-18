@@ -2,19 +2,22 @@
 \label{app:minimal}
 
 You do not need this whole class to make an accessible document. The
-skeleton below is the smallest starting point: the metadata line, the Lua
-font and math setup, and the two content rules (alt text, table headers).
-Compile it with LuaLaTeX.
+skeleton below is the smallest starting point: the metadata line
+(PDF/UA-2, so formulas enter the tag tree as readable MathML), the Lua
+font setup with a sans-serif body face, and the two content rules
+(alt text, table headers). Compile it with LuaLaTeX.
 
 % commandchars typesets the leading backslashes via |textbackslash() so the
 % source has no literal class/metadata command; the printed example is
 % identical, but Overleaf will not mistake this appendix for a "main document".
 \begin{Verbatim}[numbers=left,commandchars=\|\(\)]
 |textbackslash()DocumentMetadata{lang=en-US,
-  pdfstandard=ua-1, tagging=on}
+  pdfstandard=ua-2, tagging=on,
+  tagging-setup={math/setup={mathml-AF,mathml-SE}}}
 |textbackslash()documentclass{article}
 \usepackage{fontspec}      % LuaLaTeX fonts
-\usepackage{unicode-math}  % MathML for math
+\setmainfont{Arial}        % sans-serif body font
+\usepackage{unicode-math}  % OpenType math
 \usepackage{graphicx}
 \usepackage{booktabs}
 \begin{document}
@@ -40,12 +43,18 @@ Some text, and math $e^{i\pi}+1=0$.
 \end{document}
 \end{Verbatim}
 
+
 \section{Where to read more}
 \label{sec:more}
 
 The accessibility machinery used here comes from the \LaTeX\ Tagging
-Project. For the authoritative, continually updated instructions, see
+Project; for the authoritative, continually updated instructions, see
 \hrefu{https://latex3.github.io/tagging-project/}{the Tagging Project
-documentation}, and for a richly commented article/slides example see
-\hrefu{https://github.com/rhstanton/accessible_LaTeX}{the
-\texttt{accessible\_LaTeX} repository}.
+documentation}. For another university template built on the same
+machinery -- PDF/UA-2, tagged tables, and screen-readable mathematics
+-- see \hrefu{https://github.com/graduatecollege/uofithesis}{the
+University of Illinois Graduate College's \texttt{uofithesis} class}.
+And for a broader collection of \LaTeX\ tutorials, reference sheets,
+and accessibility-minded thesis, homework, and poster templates, see
+\hrefu{https://pauljhurtado.com/latex}{Paul Hurtado's \LaTeX\ resource
+page}.

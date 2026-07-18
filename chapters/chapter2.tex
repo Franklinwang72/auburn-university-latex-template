@@ -18,9 +18,8 @@ The template is already configured. You only need to follow two rules to keep th
 \section{How to check?}
 \label{sec:verify}
 
-The primary tool to evaluate your finished PDF is \textbf{PAC} (PDF Accessibility Checker). Drop your file into PAC to verify it meets the structural standards. Since automated tools cannot evaluate context, you must still manually verify reading order and alt text accuracy using a screen-reader preview. 
+Auburn University Graduate School currently supports checking your finished PDF with \textbf{PAC} (PDF Accessibility Checker) or \textbf{Adobe Acrobat Pro}. PAC is used to evaluate compliance with WCAG 2.1 accessibility requirements, and Acrobat checks against WCAG 2.0. Both tools have known limitations and may produce false errors, especially in LaTeX-generated PDFs. For detailed checking instructions and guidance on interpreting the results, please consult the official Auburn University Graduate School ETD website: \url{https://graduate.auburn.edu/current-students/academic-resources/etd-guide-samples.php}.
 
-\RedText{Never} run Adobe Acrobat's auto-tag feature---it will permanently overwrite and break the document's existing tags.
 
 If you need alternative testing software, browse the official \hrefu{https://www.w3.org/WAI/test-evaluate/tools/list/}{W3C WAI Web Accessibility Evaluation Tools List} to find a solution that fits your workflow.
 
@@ -75,8 +74,10 @@ There are exactly eight core elements you must format manually. Master these eig
 
 A meaningful image requires \texttt{alt=\{...\}}: provide one descriptive sentence, and avoid redundant phrases like \enquote{image of}. For purely decorative images, use the \texttt{artifact} tag (\verb|\includegraphics[artifact]{...}|) so the screen reader skips it entirely. The caption explains \emph{why} the figure is relevant; the alt text describes \emph{what} it visually depicts. Cross-reference using \texttt{\textbackslash ref}, not directional language like \enquote{the figure below}.
 
-\auLead{Example:} Figure~\ref{fig:calabiyau} demonstrates the implementation above.\quad \GreenText{Good alt:} \enquote{Aubie the Tiger high-fiving children outside the stadium.}\quad \RedText{Poor alt:} \enquote{Image428.jpg.}
-
+\auLead{Example:} \begin{itemize}
+    \item \GreenText{Good alt:} \enquote{Aubie the Tiger high-fiving children outside the stadium.}\quad 
+    \item \RedText{Poor alt:} \enquote{Image 1.2}
+\end{itemize}
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.6\linewidth,
@@ -95,7 +96,7 @@ A meaningful image requires \texttt{alt=\{...\}}: provide one descriptive senten
 
 \auLead{Why:} Without designated header rows, a table is read as a continuous stream of data. With headers marked, the screen reader announces context (e.g., \enquote{Krull dimension: 2}) as it enters a new cell. 
 
-\auLead{How:} Add a setup line immediately before your \texttt{tabular} environment to declare the header rows. Wrap individual header cells in \texttt{\textbackslash auhead}.
+\auLead{How:} Add a setup line before your \texttt{tabular} environment to declare the header rows. Wrap individual header cells in \texttt{\textbackslash auhead}.
 
 \begin{Verbatim}
 \begin{table}[htbp]
@@ -120,7 +121,7 @@ Tables are for data, not visual alignment. If you must use a \texttt{tabular} en
 \tagpdfsetup{table/tagging=presentation}
 \end{Verbatim}
 
-\auLead{Example:} In Table~\ref{tab:rings}, the header row is properly tagged, allowing a screen reader to identify the column category per cell.
+\auLead{Example:} In Table~\ref{tab:rings}, the header row is properly tagged.
 
 \begin{table}[htbp]
   \centering
@@ -164,11 +165,10 @@ right after \texttt{\textbackslash end\{tabular\}}, inside the float:
 This writes the summary in exactly the form Adobe Acrobat reads (a
 \texttt{/O /Table /Summary} attribute), so it appears under the table's
 \enquote{Edit Table Summary} field and is announced by screen readers, with
-nothing changed on the printed page. Keep the text plain, with balanced
-parentheses.
+nothing changed on the printed page.
 
 %---------------------------------------------------------------------
-\subsection{Colour}
+\subsection{Color}
 \label{subsec:colour}
 
 \auLead{Why:} WCAG mandates strict minimum contrast ratios and prohibits using colour as the sole method of conveying information. 
@@ -181,7 +181,11 @@ parentheses.
 \colorlet{AccessibleGreen}{green!40!black}  % ~7.2:1
 \end{Verbatim}
 
-\auLead{Example:} The navy lead-ins, green \GreenText{Right:}, and red \RedText{Wrong:} markers in this manual utilize accessible shades and bold text, ensuring colour is never the only visual cue. In plots, distinguish series by line dashes or marker shapes, not just hue.
+\auLead{Example:}\begin{itemize}
+    \item \GreenText{Right:} Use accessible colours together with bold labels, line styles, or marker shapes so that colour is not the only visual cue.
+    \item \RedText{Wrong:} Use colour alone to distinguish meanings, categories, or data series.
+\end{itemize}
+
 
 \begin{table}[htbp]
   \centering
@@ -216,8 +220,10 @@ parentheses.
       {the author's homepage}
 \end{Verbatim}
 
-\auLead{Example:} \GreenText{Right:} Visit \hrefu{https://webhome.auburn.edu/~zzw0109/}{the author's homepage}.\quad
-\RedText{Wrong:} \enquote{To visit the homepage, \hrefu{https://webhome.auburn.edu/~zzw0109/}{click here}}.
+\auLead{Example:} \begin{itemize}
+    \item \GreenText{Right:} Visit \hrefu{https://graduate.auburn.edu/}{Auburn University Graduate School website}.\quad
+\item \RedText{Wrong:} \enquote{To visit the homepage, \hrefu{https://webhome.auburn.edu/~zzw0109/}{click here}}.
+\end{itemize}
 
 %---------------------------------------------------------------------
 \subsection{Lists}
@@ -247,7 +253,7 @@ parentheses.
 
 \auLead{Why:} Screen readers often ignore standard equations in PDFs. This template resolves the issue natively, ensuring equations are read aloud as mathematics.
 
-\auLead{How:} Write math normally using \texttt{equation}, \texttt{align}, or inline \verb|$...$|. No special per-equation tags are needed.
+\auLead{How:} Just write math normally using \texttt{equation}, \texttt{align}, or inline \verb|$...$|. No special per-equation tags are needed.
 
 \auLead{Example:}
 \begin{equation}
