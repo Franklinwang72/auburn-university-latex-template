@@ -58,6 +58,11 @@
 - **`\chapter{...}` 标题里别用逗号** — TeX Live 2025+ 的标签引擎会误读；用冒号或破折号代替。
 - **替代文字和表头行要你自己写**；其余（标题层级、MathML）都自动生成。具体见第 2 章。
 
+## 实用资源
+
+- [Mikael Arvola](https://github.com/marvel-uiuc) — [UIUC `uofithesis` 模板](https://github.com/graduatecollege/uofithesis)的维护者，同样基于 LaTeX 标签机制的无障碍（PDF/UA-2）学位论文模板。
+- [Paul Hurtado 的 LaTeX 资源页](https://pauljhurtado.com/latex/) — 教程、速查表，以及注重无障碍的论文、作业、海报模板。
+
 ## 贡献者
 
 <a href="https://github.com/Franklinwang72">

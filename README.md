@@ -58,6 +58,11 @@ Leave the engine alone:
 - **No commas in `\chapter{...}` titles** — the TeX Live 2025+ tagging engine misreads them; use a colon or dash.
 - **You write** figure alt text and table header rows; everything else (heading structure, MathML) is automatic. Chapter 2 shows how.
 
+## Useful Resources
+
+- [Mikael Arvola](https://github.com/marvel-uiuc) — maintainer of the [UIUC `uofithesis` class](https://github.com/graduatecollege/uofithesis), an accessible (PDF/UA-2) thesis template built on the same tagging machinery.
+- [Paul Hurtado's LaTeX resource page](https://pauljhurtado.com/latex/) — tutorials, reference sheets, and accessibility-minded thesis, homework, and poster templates.
+
 ## Contributors
 
 <a href="https://github.com/Franklinwang72">
