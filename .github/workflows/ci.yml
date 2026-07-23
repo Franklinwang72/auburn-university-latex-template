@@ -54,7 +54,8 @@ jobs:
         run: |
           pip install --quiet pikepdf
           python3 .github/check.py --name "${{ matrix.name }}" \
-            --log main.log --pdf main.pdf --verapdf verapdf.xml --src .
+            --log main.log --pdf main.pdf --verapdf verapdf.xml --src . \
+            --manifest .github/overleaf-manifest.txt
 
       - name: Upload build artifacts
         if: always()

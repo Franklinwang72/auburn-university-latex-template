@@ -176,11 +176,42 @@ def check_verapdf(path):
     check(ok, "veraPDF: PDF/UA-2 compliant", detail)
 
 # ----------------------------------------------------------------------
+# Overleaf drift table (INFORMATIONAL, never fails the build): compare the
+# package versions this build loaded against the captured manifest of
+# Overleaf's default image, so the gap between CI and Overleaf is a table,
+# not a guess. Refresh the manifest with the probe when Overleaf updates.
+# ----------------------------------------------------------------------
+def overleaf_drift(logpath, manifestpath):
+    if not (logpath and manifestpath and os.path.exists(manifestpath)):
+        return ""
+    log = open(logpath, errors="replace").read()
+    here = {}
+    m = re.search(r"LaTeX2e <([0-9-]+)>", log)
+    if m: here["format"] = m.group(1)
+    for pm in re.finditer(r"^Package: ([\w-]+) (\d{4}[-/]\d{2}[-/]\d{2})\s*(v?[\w.]*)",
+                          log, re.M):
+        here[pm.group(1) + ".sty"] = (pm.group(2).replace("/", "-") + " "
+                                      + pm.group(3)).strip()
+    lines = ["<details><summary>Overleaf drift (vs captured default image)</summary>",
+             "", "| file | Overleaf | this build |", "|---|---|---|"]
+    for raw in open(manifestpath):
+        raw = raw.strip()
+        if not raw or raw.startswith("#"): continue
+        parts = raw.split(None, 1)
+        name, over = parts[0], (parts[1] if len(parts) > 1 else "")
+        mine = here.get(name, "--- not loaded ---")
+        mark = "" if over.split(" v")[0].strip("()") in mine else " ⚠️"
+        lines.append(f"| {name} | {over} | {mine}{mark} |")
+    lines += ["", "</details>"]
+    return "\n".join(lines)
+
+# ----------------------------------------------------------------------
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--name", default="local")
     ap.add_argument("--log"); ap.add_argument("--pdf")
     ap.add_argument("--verapdf"); ap.add_argument("--src", default=".")
+    ap.add_argument("--manifest")
     a = ap.parse_args()
 
     if a.log: check_log(a.log)
@@ -193,7 +224,8 @@ def main():
              "", "| check | result | detail |", "|---|---|---|"]
     for ok, label, detail in results:
         lines.append(f"| {label} | {'✅' if ok else '❌'} | {detail if not ok else ''} |")
-    report = "\n".join(lines)
+    drift = overleaf_drift(a.log, a.manifest)
+    report = "\n".join(lines) + ("\n\n" + drift if drift else "")
     print(report)
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:

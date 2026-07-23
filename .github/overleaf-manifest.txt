@@ -1,0 +1,23 @@
+# Overleaf default-environment manifest, captured with the version probe.
+# Snapshot date of the Overleaf TeX Live 2025 image: packages frozen around
+# 2025-05-10 .. 2025-05-26 (LaTeX format 2025-06-01 pre-release, LuaTeX 1.21).
+# Re-run the probe (overleaf-probe.zip) and refresh this file whenever
+# Overleaf updates its images. CI prints a drift table against this list.
+format 2025-06-01
+expl3.sty 2025-05-26
+tagpdf.sty 2025-05-16 v0.99q
+tagpdf-base.sty 2025-05-16 v0.99q
+luamml.sty 2025-03-06 v0.5.0
+latex-lab-testphase-latest.sty (not loaded)
+latex-lab-testphase-block.sty 2025-05-17 v0.9c
+latex-lab-testphase-new-or-2.sty 2025-05-10 v0.86d
+latex-lab-testphase-names.sty (not loaded)
+latex-lab-testphase-math.sty 2025-03-10 v0.8d
+latex-lab-testphase-table.sty 2025-05-10 v0.85s
+pdfmanagement-testphase.sty 2025-05-15 v0.96r
+enumitem.sty 2025-02-06 v3.11
+fontspec.sty 2024-05-11 v2.9e
+unicode-math.sty 2023-08-13 v0.8r
+hyperref.sty 2025-05-20 v7.01m
+geometry.sty 2020-01-02 v5.9
+microtype.sty 2025-02-11 v3.2a
