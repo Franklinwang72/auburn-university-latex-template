@@ -306,9 +306,23 @@
 %% To go fully monochrome, redefine the three helpers below as \textbf{#1}.
 %% ----------------------------------------------------------------------
 \RequirePackage{xcolor}
-\definecolor{AccessibleNavy}{RGB}{16,45,98}   % ~12:1 on white
-\colorlet{AccessibleRed}{red!80!black}         % ~5.9:1 on white
-\colorlet{AccessibleGreen}{green!40!black}      % ~7.2:1 on white
+%% Accessible shades, written as explicit RGB so the definitions are
+%% order-independent and safe to run twice:
+\definecolor{AccessibleNavy}{RGB}{16,45,98}    % ~12:1  on white
+\definecolor{AccessibleRed}{RGB}{204,0,0}      % ~5.9:1 (= red!80!black)
+\definecolor{AccessibleGreen}{RGB}{0,102,0}    % ~7.2:1 (= green!40!black)
+%% Make the STANDARD colour names accessible. Anything that says
+%% red/green/blue -- \textcolor{red}{...}, tikz, pgfplots series -- now
+%% gets the accessible shade automatically; no special command needed.
+\colorlet{red}{AccessibleRed}
+\colorlet{green}{AccessibleGreen}
+\colorlet{blue}{AccessibleNavy}
+\definecolor{yellow}{RGB}{102,102,0}   % ~6.1:1 (pure yellow: unreadable)
+\definecolor{orange}{RGB}{153,99,0}    % ~5.1:1
+\definecolor{cyan}{RGB}{0,128,128}     % ~4.8:1
+\definecolor{magenta}{RGB}{178,0,178}  % ~5.9:1
+%% Convenience commands, kept for compatibility (colour + bold, so
+%% colour is never the only cue):
 \newcommand{\BlueText}[1]{\textcolor{AccessibleNavy}{\textbf{#1}}}
 \newcommand{\RedText}[1]{\textcolor{AccessibleRed}{\textbf{#1}}}
 \newcommand{\GreenText}[1]{\textcolor{AccessibleGreen}{\textbf{#1}}}
@@ -328,7 +342,6 @@
 \ExplSyntaxOff
 \newcommand{\auhead}[1]{{\ausecface #1}\auetd@th@scope{Column}}
 \newcommand{\auheadrow}[1]{{\ausecface #1}\auetd@th@scope{Row}}
-
 % \tablesummary{...} -- attach a table Summary that Adobe Acrobat actually
 % reads. A table Summary is an OPTIONAL, screen-reader-only description of the
 % table's purpose/organisation (best practice for COMPLEX tables per WCAG);
@@ -502,7 +515,7 @@
 %% \@dottedtocline: same look (Chapter-N prefix, dot leaders, indents) but
 %% the entries stay live hyperlinks (and tagged ToC links).
 %% ----------------------------------------------------------------------
-\renewcommand{\contentsname}{Table of Contents}
+\AtBeginDocument{\renewcommand{\contentsname}{Table of Contents}}
 \renewcommand{\listtablename}{List of Tables}
 \renewcommand{\listfigurename}{List of Figures}
 

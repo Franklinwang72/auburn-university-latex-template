@@ -1,0 +1,68 @@
+# CI for the Auburn accessible ETD template.
+#
+# Two TeX Live legs with two distinct ROLES:
+#   * TL2025 (frozen -historic image)  = the students' Overleaf environment.
+#     This leg must NEVER break; a red here means the template regressed.
+#   * TL2026 (rolling latest image)    = the early-warning radar. A red here
+#     usually means UPSTREAM changed (tagpdf / luamml / kernel) -- we want to
+#     know before students do. The weekly cron run exists for exactly that.
+#
+# After compiling, .github/check.py runs the gate: compile-log baseline,
+# metadata asserts, source lints, and the veraPDF PDF/UA-2 verdict. See the
+# header of check.py for what each check encodes and which real-world
+# failure it prevents.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"   # weekly canary (Mon 06:00 UTC) against rolling TL
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false          # always show BOTH legs' results
+      matrix:
+        include:
+          - name: TL2025
+            image: texlive/texlive:TL2025-historic
+          - name: TL2026
+            image: texlive/texlive:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile (latexmk, LuaLaTeX, ${{ matrix.name }})
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work ${{ matrix.image }} \
+            latexmk -interaction=nonstopmode main.tex
+
+      - name: veraPDF (PDF/UA-2)
+        run: |
+          docker run --rm -v "$PWD:/data" ghcr.io/verapdf/cli:latest \
+            --flavour ua2 /data/main.pdf > verapdf.xml || true
+
+      - name: Checks (baseline + PAC-sim + lints)
+        run: |
+          pip install --quiet pikepdf
+          python3 .github/check.py --name "${{ matrix.name }}" \
+            --log main.log --pdf main.pdf --verapdf verapdf.xml --src .
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}-build
+          path: |
+            main.pdf
+            main.log
+            verapdf.xml
+          retention-days: 14

@@ -15,7 +15,10 @@
   <img alt="LuaLaTeX" src="https://img.shields.io/badge/-LuaLaTeX-008080?style=flat-square&logo=latex&logoColor=white" />
   <img alt="PDF/UA-2" src="https://img.shields.io/badge/-PDF%2FUA--2-1f6feb?style=flat-square" />
   <img alt="WCAG 2.1 AA" src="https://img.shields.io/badge/-WCAG%202.1%20AA-2da44e?style=flat-square" />
-  <img alt="TeX Live 2023+" src="https://img.shields.io/badge/-TeX%20Live%202023+-black?style=flat-square&logo=latex&logoColor=white" />
+  <a href="https://github.com/Franklinwang72/auburn-university-latex-template/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/Franklinwang72/auburn-university-latex-template/actions/workflows/ci.yml/badge.svg" />
+  </a>
+  <img alt="TeX Live 2025-2026" src="https://img.shields.io/badge/-TeX%20Live%202025--2026-black?style=flat-square&logo=latex&logoColor=white" />
 </p>
 
 奥本大学官方电子学位论文（ETD）模板，编译生成**带标签、无障碍（PDF/UA-2，数学公式可被读屏朗读）** 的 PDF。用 **LuaLaTeX** 编译；所有字体已内嵌，项目完全自包含。
