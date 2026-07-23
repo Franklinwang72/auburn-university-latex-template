@@ -187,19 +187,13 @@
 % 0 pt) puts it back between the caption and the header row.
 \setlength{\abovetopsep}{12pt}
 \RequirePackage{enumitem}
-% Lists take enumitem keys (e.g. \begin{description}[leftmargin=7em]).
-% Which keys the tagged-list ("block") module understands depends on the
-% distribution: the TL2026 module (v1.0c) knows the enumitem keys, but the
-% TL2025 module (v0.9k) rejects even leftmargin= with the HARD error
-% "Package block Error: Some keys ... are unknown", killing the build.
-% Downgrade that one message to a warning: old modules then simply ignore
-% the keys they do not know (losing only the cosmetic indent) and the same
-% source compiles on TL2025, TL2026, and Overleaf alike. Genuinely
-% mistyped keys still surface -- as a warning here, and CI's new-warning
-% baseline turns any unexpected instance into a failure.
-\ExplSyntaxOn
-\msg_redirect_name:nnn { block } { unknown-keys } { warning }
-\ExplSyntaxOff
+% NOTE: do NOT pass enumitem-only keys (style=nextline, itemsep, ...) to the
+% description environment -- on the newest LaTeX kernels the tagged-list
+% ("block") code parses the description options itself and raises
+% "Package block Error: Some keys ... are unknown" for anything but a few
+% keys such as leftmargin=. The description lists below therefore use only
+% leftmargin= and take the default (run-in) label style, which compiles on
+% old and new kernels alike.
 \RequirePackage{microtype}
 % fancyvrb for code: its Verbatim/\VerbatimInput are tagged and read by
 % screen readers. (listings and minted are NOT yet tagging-compatible.)

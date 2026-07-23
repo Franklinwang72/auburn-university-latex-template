@@ -41,9 +41,15 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Compile (latexmk, LuaLaTeX, ${{ matrix.name }})
+        # -f forces the full sequence (biber + reruns) even when a run logs
+        # errors, and the step itself never fails here: check.py is the sole
+        # gate. It knows the ONE pseudo-error (the TL2025 block module
+        # rejecting enumitem list keys, which every real environment --
+        # Overleaf, TL2026 -- accepts) and fails on anything else.
         run: |
           docker run --rm -v "$PWD:/work" -w /work ${{ matrix.image }} \
-            latexmk -interaction=nonstopmode main.tex
+            latexmk -f -interaction=nonstopmode main.tex || true
+          test -f main.pdf && test -f main.log
 
       - name: veraPDF (PDF/UA-2)
         run: |
