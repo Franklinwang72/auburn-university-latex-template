@@ -187,13 +187,32 @@
 % 0 pt) puts it back between the caption and the header row.
 \setlength{\abovetopsep}{12pt}
 \RequirePackage{enumitem}
-% NOTE: do NOT pass enumitem-only keys (style=nextline, itemsep, ...) to the
-% description environment -- on the newest LaTeX kernels the tagged-list
-% ("block") code parses the description options itself and raises
-% "Package block Error: Some keys ... are unknown" for anything but a few
-% keys such as leftmargin=. The description lists below therefore use only
-% leftmargin= and take the default (run-in) label style, which compiles on
-% old and new kernels alike.
+% NOTE: do NOT pass enumitem keys straight to the description environment.
+% The tagged-list ("block") module parses the options itself, and which keys
+% it knows depends on the distribution: the TL2025 module (v0.9k) rejects
+% even leftmargin= ("Package block Error: Some keys ... are unknown"), while
+% the TL2026 module (v1.0c) accepts the enumitem keys. \auDescription below
+% papers over the difference: it passes the keys where they work (TL2026+,
+% or tagging off) and silently drops them on the old module, so the same
+% source compiles everywhere -- at worst the label column loses its custom
+% alignment on old distributions.
+%% \auDescription[<label width>] + \auitem{<label>} -- a description list
+%% whose labels sit in a fixed-width box, so every expansion starts in the
+%% SAME column (true glossary alignment). The box travels INSIDE the item
+%% label, so it works on every distribution and every list implementation;
+%% no enumitem keys are ever passed to the environment (the TL2025 block
+%% module rejects them). Where the module is new enough (TL2026+, or
+%% tagging off) we additionally indent wrapped lines to the same column.
+\newlength{\auDescLabelWidth}
+\NewDocumentEnvironment{auDescription}{O{6em}}
+  {\setlength{\auDescLabelWidth}{#1}%
+   \@ifpackageloaded{latex-lab-testphase-block}
+     {\IfPackageAtLeastTF{latex-lab-testphase-block}{2026-01-01}
+        {\description[leftmargin=\dimexpr#1+1em\relax]}
+        {\description}}
+     {\description[leftmargin=\dimexpr#1+1em\relax]}}
+  {\enddescription}
+\newcommand{\auitem}[1]{\item[\makebox[\auDescLabelWidth][l]{#1}]}
 \RequirePackage{microtype}
 % fancyvrb for code: its Verbatim/\VerbatimInput are tagged and read by
 % screen readers. (listings and minted are NOT yet tagging-compatible.)

@@ -1,10 +1,12 @@
 %% List of Abbreviations / Symbols -- optional (include only if applicable).
 \auPrelimHeading{List of Abbreviations}
 
-\begin{description}  % no enumitem keys: the TL2025 tagging
-                       % block module rejects them (TL2026 accepts)
-  \item[ETD]    Electronic Thesis or Dissertation
-  \item[MathML] Mathematical Markup Language
-  \item[PDF/UA] PDF/Universal Accessibility (ISO 14289)
-  \item[WCAG]   Web Content Accessibility Guidelines
-\end{description}
+%% \auDescription = description with a version guard: the alignment keys are
+%% applied where the tagging engine accepts them (TeX Live 2026+, Overleaf)
+%% and dropped on the TL2025 block module, which errors on them.
+\begin{auDescription}[6em]
+  \auitem{ETD} Electronic Thesis or Dissertation
+  \auitem{MathML} Mathematical Markup Language
+  \auitem{PDF/UA} PDF/Universal Accessibility (ISO 14289)
+  \auitem{WCAG} Web Content Accessibility Guidelines
+\end{auDescription}
