@@ -62,7 +62,12 @@ def norm(s):
 # ----------------------------------------------------------------------
 def check_log(path):
     log = open(path, errors="replace").read()
+    # Errors come in TWO shapes: classic "! ..." lines, and (because
+    # .latexmkrc sets -file-line-error) "file.tex:123: Package foo Error:".
+    # The TL2025 block-module failure logged ONLY in the second shape and
+    # slipped past a "^!"-only grep -- match both, always.
     errs = re.findall(r"^! .*", log, re.M)
+    errs += re.findall(r"^[^\n:]+:\d+: .*", log, re.M)
     check(not errs, "A: 0 compile errors",
           "; ".join(e[:80] for e in errs[:3]))
     check("undefined references" not in log and

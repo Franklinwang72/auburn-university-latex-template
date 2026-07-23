@@ -217,7 +217,8 @@ description that sheafification, in
 Section~\ref{sec:sheafification}, will turn into a definition.
 
 A small vocabulary, for reference:
-\begin{description}[leftmargin=6em]
+\begin{description}  % no enumitem keys: the TL2025 tagging
+                       % block module rejects them (TL2026 accepts)
   \item[Section] an element of $\mathcal{F}(U)$: one piece of data over
         the open set $U$.
   \item[Restriction] the map $\mathcal{F}(U) \to \mathcal{F}(V)$ that
