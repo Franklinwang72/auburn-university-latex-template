@@ -48,6 +48,15 @@ KNOWN_WARNINGS = {
     ("biblatex", "Patching footnotes failed."): 4,
 }
 
+# Prefix-matched whitelist for warnings whose wrap point varies between
+# distributions. The block "unknown-keys" message is an ERROR downgraded to a
+# warning by the class, so the TL2025 module ignores enumitem list keys
+# (leftmargin=...) instead of aborting; it never fires on TL2026, which
+# knows those keys.
+KNOWN_WARNING_PREFIXES = [
+    ("block", "Some keys"),
+]
+
 results = []          # (ok, label, detail)
 def check(ok, label, detail=""):
     results.append((bool(ok), label, detail))
@@ -94,6 +103,9 @@ def check_log(path):
     for key, n in sorted(seen.items()):
         cap = KNOWN_WARNINGS.get(key)
         if cap is None:
+            if any(key[0] == pkg and key[1].startswith(pre)
+                   for pkg, pre in KNOWN_WARNING_PREFIXES):
+                continue
             fresh.append(f"{key[0]}: {key[1]} (x{n})")
         elif n > cap:
             over.append(f"{key[0]}: {key[1]} (x{n} > cap {cap})")
